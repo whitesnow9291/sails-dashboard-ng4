@@ -1,0 +1,69 @@
+<div class="animated fadeIn">
+    <table class="table table-bordered table-responsive table-sm">
+        <thead>
+          <tr>
+            <th>Select action</th>
+            <td>
+              <button type="button" class="btn btn-outline-primary action_btn" (click)="actionChanged($event, 'targets')">Targets</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-primary action_btn" (click)="actionChanged($event, 'actuals')">Actuals</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="saveTargets()" [hidden] = "current_target != 'targets'">Save</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Select store</th>
+            <td *ngFor="let store of stores">
+              <button type="button" class="btn btn-outline-primary store_btn" (click)="storeChanged($event, store)">{{store}}</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-primary store_btn" (click)="storeChanged($event, 'all_stores')">All stores</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Select year</th>
+            <td *ngFor="let year of years">
+              <button type="button" class="btn btn-outline-primary year_btn" (click)="yearChanged($event, year)">{{year}}</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Select month</th>
+            <td *ngFor="let month of months">
+              <button type="button" class="btn btn-outline-primary month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
+            </td>
+            <th>Year</th>
+          </tr>
+          <tr>
+            <th colspan="14">&nbsp;</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-success">
+            <th>Actual</th>
+            <td *ngFor="let month of months"></td>
+            <td></td>
+          </tr>
+          <tr class="table-info">
+            <th>Target</th>
+            <td *ngFor="let month of months">
+              <input class="form-control" [hidden] = "current_target != 'targets'">
+            </td>
+            <td></td>
+          </tr>
+          <tr class="table-danger">
+            <th>Virance</th>
+            <td *ngFor="let month of months"></td>
+            <td></td>
+          </tr>
+          <tr *ngFor="let employer of [1,2,3,4,5,6,7,8,9]">
+            <th scope="row">{{ 'employer '+ employer }} </th>
+            <td *ngFor="let month of months">
+              <input class="form-control" [hidden] = "current_target != 'targets'">
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+</div>

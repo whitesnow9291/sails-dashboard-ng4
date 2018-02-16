@@ -1,0 +1,16 @@
+table {
+    button.btn {
+        width: 100%;
+    }
+    input.form-control {
+        width: 100% !important;
+    }
+    tr td {
+        width: 7%;
+    }
+}
+table.admin_table {
+    button.btn {
+        width: auto;
+    }
+}

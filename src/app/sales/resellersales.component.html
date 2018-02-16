@@ -1,0 +1,48 @@
+<div class="animated fadeIn">
+        <table class="table table-bordered table-responsive table-sm">
+            <thead>
+              <tr>
+                <th>Select group</th>
+                <td *ngFor="let group of groups">
+                  <button type="button" class="btn btn-outline-primary group_btn" (click)="groupChanged($event, group)">{{group}}</button>
+                </td>
+              </tr>
+              <tr>
+                <th>Select year</th>
+                <td *ngFor="let year of years">
+                  <button type="button" class="btn btn-outline-primary year_btn" (click)="yearChanged($event, year)">{{year}}</button>
+                </td>
+              </tr>
+              <tr>
+                <th>Select month</th>
+                <td *ngFor="let month of months">
+                  <button type="button" class="btn btn-outline-primary month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
+                </td>
+                <th>Year</th>
+              </tr>
+              <tr>
+                <th colspan="14">&nbsp;</th> 
+              </tr>
+              <tr>
+                <th>{{current_group}}</th>
+                <td *ngFor="let month of months">
+                  &nbsp;
+                </td>
+                <th>&nbsp;</th>
+              </tr>
+              <tr>
+                <th><input class="form-control" placeholder="Search by name"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employer of [1,2,3,4,5,6,7,8,9]">
+                <th scope="row">{{ 'employer '+ employer }} </th>
+                <td *ngFor="let month of months">
+                  <input class="form-control" [hidden] = "current_target != 'targets'">
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    

@@ -1,0 +1,47 @@
+<header class="app-header navbar">
+    <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
+    <a class="navbar-brand" href="#">Gswdev</a>
+    <ul class="nav navbar-nav mr-auto d-md-down-none">
+        <li class="nav-item">
+            <a class="nav-link navbar-toggler" href="#" appSidebarToggler>&#9776;</a>
+        </li>
+    </ul>
+</header>
+
+<div class="app-body">
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/admin']"><i class="icon-user"></i> Administrators </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/sales/store']"><i class="icon-present"></i> Store sale </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/sales/reseller']"><i class="icon-refresh"></i> Reseller sale </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <main class="main">
+
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb">
+            <app-breadcrumbs></app-breadcrumbs>
+        </ol>
+
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- /.conainer-fluid -->
+    </main>
+</div>
+
+<footer class="app-footer">
+    <a href="http://gswdev.com">Gswdev</a> &copy; 2018
+    <span class="float-right">Powered by <a href="https://nomuranori9291.wixsite.com/webdeveloper">Nomura</a>
+    </span>
+</footer>
