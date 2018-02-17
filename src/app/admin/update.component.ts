@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 })
 export class UpdateComponent {
 
+  message: String;
   constructor( ) { }
   updateAccount() {
     alert('successfully updated');

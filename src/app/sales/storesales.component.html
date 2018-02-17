@@ -4,10 +4,10 @@
           <tr>
             <th>Select action</th>
             <td>
-              <button type="button" class="btn btn-outline-primary action_btn" (click)="actionChanged($event, 'targets')">Targets</button>
+              <button type="button" class="btn btn-outline-primary action_btn targets_btn" (click)="actionChanged($event, 'targets')">Targets</button>
             </td>
             <td>
-              <button type="button" class="btn btn-outline-primary action_btn" (click)="actionChanged($event, 'actuals')">Actuals</button>
+              <button type="button" class="btn btn-outline-success action_btn actuals_btn" (click)="actionChanged($event, 'actuals')">Actuals</button>
             </td>
             <td>
               <button type="button" class="btn btn-danger" (click)="saveTargets()" [hidden] = "current_target != 'targets'">Save</button>

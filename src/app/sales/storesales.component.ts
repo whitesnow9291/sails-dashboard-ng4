@@ -15,10 +15,20 @@ export class StoreComponent {
   constructor(public elRef: ElementRef) { }
   actionChanged ($event, action) {
     this.current_target = action
-    $('.action_btn').addClass('btn-outline-primary')
-    $('.action_btn').removeClass('btn-primary')
-    $event.target.classList.remove('btn-outline-primary')
-    $event.target.classList.add('btn-primary')
+    if (action === 'actuals') {
+      console.log(action)
+      $('.actuals_btn').removeClass('btn-outline-success')
+      $('.actuals_btn').addClass('btn-success')
+      $('.targets_btn').removeClass('btn-primary')
+      $('.targets_btn').addClass('btn-outline-primary')
+      $event.target.classList.add('btn-success')
+    } else {
+      console.log(action)
+      $('.actuals_btn').addClass('btn-outline-success')
+      $('.actuals_btn').removeClass('btn-success')
+      $('.targets_btn').addClass('btn-primary')
+      $('.targets_btn').removeClass('btn-outline-primary')
+    }
   }
   storeChanged ($event, store) {
     $('.store_btn').addClass('btn-outline-primary')

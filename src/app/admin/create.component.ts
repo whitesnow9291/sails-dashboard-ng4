@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
   templateUrl: 'create.component.html'
 })
 export class CreateComponent {
-
+  message: String;
   constructor( ) { }
   createAccount() {
     alert('successfully created');
