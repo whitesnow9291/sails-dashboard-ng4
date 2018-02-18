@@ -16,22 +16,22 @@
           <tr>
             <th>Select store</th>
             <td *ngFor="let store of stores">
-              <button type="button" class="btn btn-outline-primary store_btn" (click)="storeChanged($event, store)">{{store}}</button>
+              <button type="button" class="btn {{btn_outline_class}} store_btn" (click)="storeChanged($event, store)">{{store}}</button>
             </td>
             <td>
-              <button type="button" class="btn btn-outline-primary store_btn" (click)="storeChanged($event, 'all_stores')">All stores</button>
+              <button type="button" class="btn {{btn_outline_class}} store_btn" (click)="storeChanged($event, 'all_stores')">All stores</button>
             </td>
           </tr>
           <tr>
             <th>Select year</th>
             <td *ngFor="let year of years">
-              <button type="button" class="btn btn-outline-primary year_btn" (click)="yearChanged($event, year)">{{year}}</button>
+              <button type="button" class="btn {{btn_outline_class}} year_btn" (click)="yearChanged($event, year)">{{year}}</button>
             </td>
           </tr>
           <tr>
             <th>Select month</th>
             <td *ngFor="let month of months">
-              <button type="button" class="btn btn-outline-primary month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
+              <button type="button" class="btn {{btn_outline_class}} month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
             </td>
             <th>Year</th>
           </tr>
@@ -53,12 +53,12 @@
             <td></td>
           </tr>
           <tr class="table-danger">
-            <th>Virance</th>
+            <th>Variance</th>
             <td *ngFor="let month of months"></td>
             <td></td>
           </tr>
           <tr *ngFor="let employer of [1,2,3,4,5,6,7,8,9]">
-            <th scope="row">{{ 'employer '+ employer }} </th>
+            <th scope="row">{{ 'employee '+ employer }} </th>
             <td *ngFor="let month of months">
               <input class="form-control" [hidden] = "current_target != 'targets'">
             </td>
