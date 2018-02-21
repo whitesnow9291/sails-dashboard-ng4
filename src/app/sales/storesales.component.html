@@ -1,5 +1,5 @@
 <div class="animated fadeIn">
-    <table class="table table-bordered table-responsive table-sm">
+    <table class="table table-bordered table-responsive table-sm storesales_table">
         <thead>
           <tr>
             <th>Select action</th>
@@ -48,7 +48,7 @@
           <tr class="table-info">
             <th>Target</th>
             <td *ngFor="let month of months">
-              <input class="form-control" [hidden] = "current_target != 'targets'">
+              <input class="form-control" [hidden] = "current_target != 'targets' || selected_months[month.no] == false">
             </td>
             <td></td>
           </tr>
@@ -60,7 +60,7 @@
           <tr *ngFor="let employer of [1,2,3,4,5,6,7,8,9]">
             <th scope="row">{{ 'employee '+ employer }} </th>
             <td *ngFor="let month of months">
-              <input class="form-control" [hidden] = "current_target != 'targets'">
+              <input class="form-control" [hidden] = "current_target != 'targets' || selected_months[month.no] == false">
             </td>
             <td></td>
           </tr>

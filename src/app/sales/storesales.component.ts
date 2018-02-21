@@ -1,20 +1,26 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { stores, years, months } from '../shared/constants';
+import { stores, years, months, Month } from '../shared/constants';
 declare var jquery: any;
 declare var $: any;
 @Component({
   templateUrl: 'storesales.component.html'
 })
-export class StoreComponent {
+export class StoreComponent implements OnInit {
   stores = stores
   years = years
   months = months
   current_target = ''
+  selected_months: Object = {}
   btn_outline_class = 'btn-outline-primary'
   btn_fill_class = 'btn-primary'
   constructor(public elRef: ElementRef) { }
+  ngOnInit() {
+    for (let i = 1; i <= 12; i ++) {
+      this.selected_months[i] = false
+    }
+  }
   actionChanged ($event, action) {
     this.current_target = action
     if (action === 'actuals') {
@@ -24,6 +30,9 @@ export class StoreComponent {
       $('.actuals_btn').removeClass(this.btn_outline_class)
       $('.targets_btn').addClass('btn-outline-primary')
       $('.targets_btn').removeClass('btn-primary')
+      for (let i = 1; i <= 12; i ++) {
+        this.selected_months[i] = false
+      }
     } else {
       this.btn_outline_class = 'btn-outline-primary'
       this.btn_fill_class = 'btn-primary'
@@ -48,6 +57,9 @@ export class StoreComponent {
   monthChanged ($event, month) {
     $event.target.classList.toggle(this.btn_outline_class)
     $event.target.classList.toggle(this.btn_fill_class)
+    if (this.current_target !== 'actuals') {
+      this.selected_months[month.no] = !this.selected_months[month.no]
+    }
   }
   saveTargets () {
     alert('target saved!')

@@ -14,3 +14,16 @@ table.admin_table {
         width: auto;
     }
 }
+table.storesales_table {
+    .btn-success {
+      background-color: #456f01;
+      border-color: #456f01;
+    }
+    .btn-outline-success {
+        color: #456f01;
+        border-color: #456f01;
+    }
+}
+input.form-control, input.form-control:focus {
+    color: black;
+}
