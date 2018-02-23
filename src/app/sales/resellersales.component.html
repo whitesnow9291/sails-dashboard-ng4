@@ -4,7 +4,7 @@
               <tr>
                 <th>Select group</th>
                 <td *ngFor="let group of groups">
-                  <button type="button" class="btn btn-outline-primary group_btn" (click)="groupChanged($event, group)">{{group}}</button>
+                  <button type="button" class="btn btn-outline-primary group_btn" (click)="groupChanged($event, group)">{{group.title}}</button>
                 </td>
               </tr>
               <tr>
@@ -24,7 +24,7 @@
                 <th colspan="14">&nbsp;</th> 
               </tr>
               <tr>
-                <th>{{current_group}}</th>
+                <th>{{current_group | async}}</th>
                 <td *ngFor="let month of months">
                   &nbsp;
                 </td>

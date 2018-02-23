@@ -20,6 +20,8 @@ import { PageNotFoundComponent } from './404.component';
 import { ServerErrorComponent } from './500.component';
 import { AuthGuard } from './services/auth-guard.service'
 import { AuthService } from './services/auth.service'
+import { SalesDataService } from './services/salesdata'
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { AuthService } from './services/auth.service'
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-    }, AuthGuard, AuthService
+    }, AuthGuard, AuthService, SalesDataService
   ],
   bootstrap: [ AppComponent ]
 })
