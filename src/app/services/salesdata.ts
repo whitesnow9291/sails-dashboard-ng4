@@ -6,12 +6,18 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 class Group {
   id: String;
   title: String;
 }
 @Injectable()
 export class SalesDataService {
+  postUrl = 'http://gswdev.com/sales_targets/router.php';
   groups: Group[] = [
     {
       id: '2',
@@ -30,28 +36,32 @@ export class SalesDataService {
       title: '1500'
     }
   ];
+
+  constructor(
+    private http: HttpClient) {
+  }
   getGroups(): Group[] {
     return this.groups
   }
-  getStores(): Observable<any> {
-    return Observable.of(true).delay(1000).do(val =>  true);
+  getStores(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
 
-  getActuals(): Observable<any> {
-    return Observable.of(true).delay(1000).do(val =>  true);
+  getActuals(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
 
-  getActualvsTarget(): Observable<any> {
-    return Observable.of(true).delay(1000).do(val =>  true);
+  getActualvsTarget(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
-  getTargets(): Observable<any> {
-    return Observable.of(true).delay(1000).do(val =>  true);
+  getTargets(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
-  getReseller(): Observable<any> {
-    return Observable.of(true).delay(1000).do(val =>  true);
+  getReseller(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
-  setTarget(): Observable<any> {
-    return Observable.of(true).delay(1000).do(val =>  true);
+  setTarget(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
 }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { StoreComponent } from './storesales.component';
 import { ResellerComponent } from './resellersales.component';
@@ -11,7 +12,8 @@ import { HighlightDirective } from '../shared/highlight.directive';
   imports: [
     SalesRoutingModule,
     ChartsModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: [ StoreComponent, ResellerComponent, HighlightDirective ]
 })

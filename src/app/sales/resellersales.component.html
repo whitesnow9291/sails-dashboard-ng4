@@ -21,26 +21,26 @@
                 <th>Year</th>
               </tr>
               <tr>
-                <th colspan="14">&nbsp;</th> 
+                <td colspan="14" [innerHtml]="message"></td> 
               </tr>
               <tr>
-                <th>{{current_group | async}}</th>
+                <th>{{current_group_title}}</th>
                 <td *ngFor="let month of months">
                   &nbsp;
                 </td>
                 <th>&nbsp;</th>
               </tr>
               <tr>
-                <th><input class="form-control" placeholder="Search by name"></th>
+                <th><input class="form-control" placeholder="Search by name" (keyup)="searchname.next($event.target.value)"></th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let employer of [1,2,3,4,5,6,7,8,9]">
-                <th scope="row">{{ 'employer '+ employer }} </th>
+            <tbody *ngIf = "resellerSearchResult != null">
+              <tr *ngFor="let record of resellerSearchResult" >
+                <th scope="row">{{ record.profile.customer_firstname + ' ' + record.profile.customer_lastname }} </th>
                 <td *ngFor="let month of months">
-                  <input class="form-control" [hidden] = "current_target != 'targets'">
+                  {{ getSubTotal(month.no, record.subtotals) }}
                 </td>
-                <td></td>
+                <td>{{ record.yeartotal }}</td>
               </tr>
             </tbody>
           </table>

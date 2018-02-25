@@ -1,11 +1,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SalesDataService } from '../services/salesdata';
-import { groups, years, months } from '../shared/constants';
+import { years, months } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 declare var jquery: any;
 declare var $: any;
@@ -17,12 +16,17 @@ export class ResellerComponent implements OnInit {
   years = years
   months = months
   months_status = []
+  message = '&nbsp;'
+  searchname: Subject<String> = new Subject<String>();
+  current_group_title = 'Choose Group'
 
   current_group: Subject<number> = new Subject<number>();
   current_year: Subject<number> = new Subject<number>();
   current_months: Subject<number[]> = new Subject<number[]>();
-
   optionsSub: Subscription;
+
+  resellerdata: any;
+  resellerSearchResult: any;
   constructor(public elRef: ElementRef, public salesdata: SalesDataService) { }
   ngOnInit() {
     this.getGroups();
@@ -36,17 +40,45 @@ export class ResellerComponent implements OnInit {
       this.current_group,
       this.current_year,
       this.current_months
-    ).subscribe(([current_group, current_year, current_months]) => {
-        this.salesdata.getReseller()
+    ).debounceTime(300).subscribe(([current_group, current_year, current_months]) => {
+        this.message = 'loading data ...'
+        const params = {
+          'command': 'getReseller',
+          'group_id': current_group,
+          'year': current_year,
+          'months': current_months
+        }
+        this.salesdata.getReseller(params)
         .subscribe(data => {
-          console.log(data)
+          this.resellerdata = data;
+          this.resellerSearchResult = data;
+          this.message = '&nbsp;'
         });
     });
+    const self = this
+    this.searchname.debounceTime(200).subscribe((searchTerm) => {
+      self.resellerSearchResult = self.resellerdata.filter(function(record){
+        if (record.profile.customer_firstname.indexOf(searchTerm) > -1 || record.profile.customer_lastname.indexOf(searchTerm) > -1 ) {
+          return true
+        } else {
+          return false
+        }
+      })
+    });
+  }
+  getSubTotal(month, subtotals) {
+
+    for (let i = 0; i < subtotals.length; i++) {
+      if (Number(subtotals[i].month) === month) {
+        return subtotals[i].subtotal;
+      }
+    }
   }
   getGroups () {
     this.groups = this.salesdata.getGroups()
   }
   groupChanged ($event, group) {
+    this.current_group_title = group.title
     this.current_group.next(group.id)
     $('.group_btn').addClass('btn-outline-primary')
     $('.group_btn').removeClass('btn-primary')
@@ -62,7 +94,7 @@ export class ResellerComponent implements OnInit {
   }
   monthChanged ($event, month) {
     this.months_status[month.no - 1] = !this.months_status[month.no - 1]
-    let temp: number[] = []
+    const temp: number[] = []
     for (let i = 0; i < 12; i ++) {
       if (this.months_status[i]) {
         temp.push(i + 1)
