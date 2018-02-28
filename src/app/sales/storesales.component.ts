@@ -45,9 +45,7 @@ export class StoreComponent implements OnInit {
       'store_id' : -1,
       'name' : 'All stores'
     }
-    this.salesdata.getStores(params).subscribe(data => {
-      this.stores = data
-    })
+    this.stores = this.salesdata.getStores(params)
     this.setOptions();
     for (let i = 0; i < 12; i ++) {
       this.months_status.push(false)
@@ -66,6 +64,9 @@ export class StoreComponent implements OnInit {
     ).debounceTime(300).subscribe(([current_store, current_year, current_months]) => {
         if (current_store == null || current_year == null || current_months == null || !current_months.length) {
           this.canSave = false
+          this.actualtargetdata = null
+          this.targetdata = null
+          this.actualdata = null
           return
         }
         this.canSave = true
@@ -119,14 +120,14 @@ export class StoreComponent implements OnInit {
     });
   }
   getYearTarget() {
-    let yeartarget = 0
+    let yeartarget: Number = 0
     this.targetInputYearData.forEach(element => {
-      yeartarget = Number(yeartarget + element)
+      yeartarget = Number(yeartarget) + Number(element)
     });
     return yeartarget
   }
   getYearEmployeeTarget(employee_id) {
-    let yeartarget = 0
+    let yeartarget: Number = 0
     let employee
     this.targetEmployeeInputYearData.forEach(element => {
       if (element.employee.employee_id === employee_id) {
@@ -135,7 +136,7 @@ export class StoreComponent implements OnInit {
       }
     });
     employee.subtotal.forEach(element => {
-      yeartarget = Number(yeartarget + element)
+      yeartarget = Number(yeartarget) + Number(element)
     });
     return yeartarget
   }
@@ -185,14 +186,23 @@ export class StoreComponent implements OnInit {
   getTotalActualFromMonth(month, subtotals) {
     for (let i = 0; i < subtotals.length; i++) {
       if (Number(subtotals[i].month) === month) {
-        return subtotals[i].subtotal;
+        return Number(subtotals[i].subtotal);
+      }
+    }
+  }
+  getVarianceActualTab(month) {
+    const targets = this.actualtargetdata.target.month_target
+    const actuals = this.actualtargetdata.actual.month_target
+    for (let i = 0; i < targets.length; i++) {
+      if (Number(targets[i].month) === month) {
+        return actuals[i].subtotal - targets[i].target;
       }
     }
   }
   getTotalTargetFromMonth(month, subtotals) {
     for (let i = 0; i < subtotals.length; i++) {
       if (Number(subtotals[i].month) === month) {
-        return subtotals[i].target;
+        return Number(subtotals[i].target);
       }
     }
   }
@@ -230,6 +240,18 @@ export class StoreComponent implements OnInit {
   }
   storeChanged ($event, store) {
     this.current_store.next(store.store_id)
+    // init year/month
+    this.current_months.next(null)
+    this.current_year.next(null)
+    $('.year_btn').addClass(this.btn_outline_class)
+    $('.year_btn').removeClass(this.btn_fill_class)
+    for (let i = 0; i < 12; i ++) {
+      this.months_status[i] = false
+    }
+
+    $('.month_btn').addClass(this.btn_outline_class)
+    $('.month_btn').removeClass(this.btn_fill_class)
+    // end init
     $('.store_btn').addClass(this.btn_outline_class)
     $('.store_btn').removeClass(this.btn_fill_class)
     $event.target.classList.remove(this.btn_outline_class)

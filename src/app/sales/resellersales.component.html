@@ -38,9 +38,9 @@
               <tr *ngFor="let record of resellerSearchResult" >
                 <th scope="row">{{ record.profile.customer_firstname + ' ' + record.profile.customer_lastname }} </th>
                 <td *ngFor="let month of months">
-                  {{ getSubTotal(month.no, record.subtotals) }}
+                  {{ getSubTotal(month.no, record.subtotals) | number : '1.0-0'}}
                 </td>
-                <td>{{ record.yeartotal }}</td>
+                <td>{{ record.yeartotal | number : '1.0-0' }}</td>
               </tr>
             </tbody>
           </table>

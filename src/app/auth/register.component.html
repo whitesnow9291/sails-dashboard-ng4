@@ -1,4 +1,4 @@
-<div class="app flex-row align-items-center">
+<div class="app flex-row align-items-center register_div">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -8,39 +8,40 @@
             <p class="text-muted">{{ message }}</p>
             <div class="input-group mb-3">
               <span class="input-group-addon"><i class="icon-user"></i></span>
-              <input type="text" class="form-control" placeholder="Username">
+              <input type="text" class="form-control" [(ngModel)] = "user.username" placeholder="Username">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-addon">@</span>
-              <input type="text" class="form-control" placeholder="Email">
+              <input type="email" class="form-control" [(ngModel)] = "user.email" placeholder="Email">
             </div>
 
             <div class="input-group mb-3">
               <span class="input-group-addon"><i class="icon-lock"></i></span>
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="password" class="form-control" [(ngModel)] = "user.password" placeholder="Password">
             </div>
 
             <div class="input-group mb-4">
               <span class="input-group-addon"><i class="icon-lock"></i></span>
-              <input type="password" class="form-control" placeholder="Repeat password">
+              <input type="password" class="form-control" [(ngModel)] = "user.password_conf" placeholder="Repeat password">
             </div>
-            <div class="input-group mb-4">
-              <span class="input-group-addon"><i class="icon-handbag"></i></span>
-              <select class="custom-select form-control">
-                <option selected>Select Store</option>
-                <option value="1">Admin</option>
-                <option value="2">Online</option>
-                <option value="3">Retail</option>
-                <option value="2">Reseller</option>
-                <option value="3">POS</option>
-                <option value="2">Factory</option>
-                <option value="3">Dropship</option>
-                <option value="3">MyBeauty</option>
-                <option value="2">Facebook</option>
-                <option value="3">Divanah</option>
-              </select>
+            <div class="store_role_group">
+              <div class="input-group mb-4 role_div">
+                <span class="input-group-addon"><i class="icon-handbag"></i></span>
+                <select class="custom-select form-control" [ngModel] = 'user.role' (ngModelChange)="onRoleChange($event)">
+                  <option selected value="-1">Select role</option>
+                  <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+                </select>
+              </div>
+              <div class="input-group mb-4 store_div" [hidden] = "user.role!=3">
+                <span class="input-group-addon"><i class="icon-handbag"></i></span>
+                <select class="custom-select form-control" [ngModel] = 'user.store' (ngModelChange)="onStoreChange($event)" >
+                  <option selected  value="-1">Select store</option>
+                  <option *ngFor="let store of stores" [value]="store.store_id">{{ store.name }}</option>
+                </select>
+              </div>
             </div>
+            
             <button type="button" class="btn btn-block btn-success" (click)="createAccount()">Create Account</button>
           </div>
         </div>

@@ -7,6 +7,7 @@ table {
     }
     tr td {
         width: 7%;
+        text-align: right;
     }
 }
 table.admin_table {
@@ -23,7 +24,22 @@ table.storesales_table {
         color: #456f01;
         border-color: #456f01;
     }
+    input {
+        text-align: right;
+    }
 }
 input.form-control, input.form-control:focus {
     color: black;
+}
+.register_div {
+    .store_div {
+        width: 50%;
+        float: right;
+        padding-left: 10px;
+    }
+    .role_div {
+        width: 50%;
+        float: left;
+        padding-right: 10px;
+    }
 }

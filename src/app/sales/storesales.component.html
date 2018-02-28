@@ -47,10 +47,10 @@
               <tr class="table-success">
                 <th>Actual</th>
                 <td *ngFor="let month of months">
-                  {{ getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) }}
+                  {{ getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) | number : '1.0-0' }}
                 </td>
                 <td>
-                  {{ actualtargetdata.actual.yeartotal }}
+                  {{ actualtargetdata.actual.yeartotal | number : '1.0-0'}}
                 </td>
               </tr>
               <tr class="table-info">
@@ -58,21 +58,21 @@
                   <td *ngFor="let month of months">
                     <input class="form-control" type="number" [hidden] = "months_status[month.no-1] == false" [(ngModel)] = "targetInputYearData[month.no-1]">
                     <ng-container *ngIf="months_status[month.no-1] == false">
-                      {{ targetInputYearData[month.no-1] }}
+                      {{ targetInputYearData[month.no-1] | number : '1.0-0'}}
                     </ng-container>
                     
                   </td>
                   <td>
-                    {{ getYearTarget() }}
+                    {{ getYearTarget() | number : '1.0-0'}}
                   </td>
               </tr>
               <tr class="table-danger">
                 <th>Variance</th>
                 <td *ngFor="let month of months">
-                  {{ (getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) - targetInputYearData[month.no-1]) | number : '1.2-2' || '' }}
+                  {{ (getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) - targetInputYearData[month.no-1]) | number : '1.0-0' || '' }}
                 </td>
                 <td>
-                    {{ (actualtargetdata.actual.yeartotal - getYearTarget()) | number : '1.2-2' }}
+                    {{ (actualtargetdata.actual.yeartotal - getYearTarget()) | number : '1.0-0' }}
                 </td>
               </tr>
             </ng-container>
@@ -80,10 +80,13 @@
               <tr *ngFor="let employee of targetEmployeeInputYearData">
                 <th scope="row">{{ employee.employee.employee_display_name }} </th>
                 <td *ngFor="let month of months">
-                  <input class="form-control" type="number" [hidden] = "months_status[month.no-1] == false" [(ngModel)]="employee.subtotal[month.no-1]">
+                  <input class="form-control" type="number" [hidden] = "months_status[month.no-1] == false" [(ngModel)]="employee.subtotal[month.no-1]" step=".01">
+                  <ng-container *ngIf="months_status[month.no-1] == false">
+                    {{ employee.subtotal[month.no-1] | number : '1.0-0' }}
+                  </ng-container>
                 </td>
                 <td>
-                  {{ getYearEmployeeTarget( employee.employee.employee_id)  }}
+                  {{ getYearEmployeeTarget( employee.employee.employee_id)  | number : '1.0-0' }}
                 </td>
               </tr>
             </ng-container>
@@ -93,36 +96,36 @@
               <tr class="table-success">
                   <th>Actual</th>
                   <td *ngFor="let month of months">
-                    {{ getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) }}
+                    {{ getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) | number : '1.0-0' }}
                   </td>
                   <td>
-                    {{ actualtargetdata.actual.yeartotal }}
+                    {{ actualtargetdata.actual.yeartotal | number : '1.0-0'}}
                   </td>
                 </tr>
                 <tr class="table-info">
                   <th>Target</th>
                   <td *ngFor="let month of months">
-                    {{ getTotalTargetFromMonth(month.no, actualtargetdata.target.month_target) }}
+                    {{ getTotalTargetFromMonth(month.no, actualtargetdata.target.month_target) | number : '1.0-0'}}
                   </td>
                   <td>
-                    {{ actualtargetdata.target.yeartotal }}
+                    {{ actualtargetdata.target.yeartotal | number : '1.0-0'}}
                   </td>
                 </tr>
                 <tr class="table-danger">
                   <th>Variance</th>
                   <td *ngFor="let month of months">
-                      {{ (getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) - getTotalTargetFromMonth(month.no, actualtargetdata.target.month_target)) || '' }}
+                      {{ getVarianceActualTab(month.no) | number : '1.0-0' }}
                   </td>
-                  <td>{{ actualtargetdata.actual.yeartotal - actualtargetdata.target.yeartotal }}</td>
+                  <td>{{ (actualtargetdata.actual.yeartotal - actualtargetdata.target.yeartotal) | number : '1.0-0' }}</td>
                 </tr>
             </ng-container>
             <ng-container *ngIf="actualdata!=null">
               <tr *ngFor="let employee of actualdata">
                 <th scope="row">{{ employee.employee.employee_name }} </th>
                 <td *ngFor="let month of months">
-                  {{ getSubTotal(month.no, employee.subtotals) }}
+                  {{ getSubTotal(month.no, employee.subtotals) | number : '1.0-0'}}
                 </td>
-                <td>{{employee.yeartotal}}</td>
+                <td>{{employee.yeartotal | number : '1.0-0'}}</td>
               </tr>
             </ng-container>
           </ng-container>

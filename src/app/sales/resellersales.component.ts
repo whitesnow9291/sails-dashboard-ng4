@@ -41,6 +41,11 @@ export class ResellerComponent implements OnInit {
       this.current_year,
       this.current_months
     ).debounceTime(300).subscribe(([current_group, current_year, current_months]) => {
+      if (current_group == null || current_year == null || current_months == null || !current_months.length) {
+        this.resellerdata = null
+        this.resellerSearchResult = null
+        return
+      }
         this.message = 'loading data ...'
         const params = {
           'command': 'getReseller',
@@ -57,8 +62,10 @@ export class ResellerComponent implements OnInit {
     });
     const self = this
     this.searchname.debounceTime(200).subscribe((searchTerm) => {
+      searchTerm = searchTerm.toLowerCase()
       self.resellerSearchResult = self.resellerdata.filter(function(record){
-        if (record.profile.customer_firstname.indexOf(searchTerm) > -1 || record.profile.customer_lastname.indexOf(searchTerm) > -1 ) {
+        if (record.profile.customer_firstname.toLowerCase().indexOf(searchTerm) > -1
+          || record.profile.customer_lastname.indexOf(searchTerm) > -1 ) {
           return true
         } else {
           return false
@@ -79,7 +86,18 @@ export class ResellerComponent implements OnInit {
   }
   groupChanged ($event, group) {
     this.current_group_title = group.title
+    // reset year/month
+    this.current_year.next(null)
+    this.current_months.next([])
     this.current_group.next(group.id)
+    $('.year_btn').addClass('btn-outline-primary')
+    $('.year_btn').removeClass('btn-primary')
+    $('.month_btn').addClass('btn-outline-primary')
+    $('.month_btn').removeClass('btn-primary')
+    for (let i = 0; i < 12; i ++) {
+      this.months_status[i] = false
+    }
+    // reset end
     $('.group_btn').addClass('btn-outline-primary')
     $('.group_btn').removeClass('btn-primary')
     $event.target.classList.remove('btn-outline-primary')

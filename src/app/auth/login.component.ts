@@ -6,6 +6,8 @@ import { AuthService } from '../services/auth.service'
 })
 export class LoginComponent implements OnInit {
   message: String;
+  email: String
+  password: String
   constructor(public router: Router, public authService: AuthService) { }
   ngOnInit() {
     this.message = 'Sign In to your account'
@@ -15,8 +17,12 @@ export class LoginComponent implements OnInit {
   }
   login() {
     this.message = 'Trying to log in ...';
-
-    this.authService.login().subscribe(() => {
+    const params = {
+      'email': this.email,
+      'password': this.password,
+      'command': 'signin'
+    }
+    this.authService.login(params).subscribe((res) => {
       this.setMessage();
       if (this.authService.isLoggedIn) {
         // Get the redirect URL from our auth service

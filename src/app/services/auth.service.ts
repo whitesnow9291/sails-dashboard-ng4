@@ -5,19 +5,29 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
 
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 @Injectable()
 export class AuthService {
   isLoggedIn = false;
 
+  postUrl = 'https://gswdev.com/sales_targets/router.php';
   // store the URL so we can redirect after logging in
   redirectUrl: string;
-
-  register(): Observable<boolean> {
-    return Observable.of(true).delay(1000).do(val => this.isLoggedIn = true);
+  constructor(
+    private http: HttpClient) {
+  }
+  register(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
 
-  login(): Observable<boolean> {
-    return Observable.of(true).delay(1000).do(val => this.isLoggedIn = true);
+  login(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
   }
 
   logout(): void {
