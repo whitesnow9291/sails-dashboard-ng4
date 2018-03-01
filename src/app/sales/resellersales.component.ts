@@ -73,13 +73,35 @@ export class ResellerComponent implements OnInit {
       })
     });
   }
+  getGroupYearTotal () {
+    let yearGroupTotal = 0
+    if (!this.resellerSearchResult) {
+      return yearGroupTotal
+    }
+    for (let i = 0; i < this.resellerSearchResult.length; i++) {
+      const record = this.resellerSearchResult[i]
+      yearGroupTotal = yearGroupTotal + Number(record.yeartotal)
+    }
+    return yearGroupTotal
+  }
+  getGroupSubTotal(month) {
+    let yearsubtotal = 0
+    if (!this.resellerSearchResult) {
+      return yearsubtotal
+    }
+    for (let i = 0; i < this.resellerSearchResult.length; i++) {
+      const record = this.resellerSearchResult[i]
+      yearsubtotal = yearsubtotal + Number(this.getSubTotal(month.no, record.subtotals))
+    }
+    return yearsubtotal
+  }
   getSubTotal(month, subtotals) {
-
     for (let i = 0; i < subtotals.length; i++) {
       if (Number(subtotals[i].month) === month) {
         return subtotals[i].subtotal;
       }
     }
+    return 0
   }
   getGroups () {
     this.groups = this.salesdata.getGroups()

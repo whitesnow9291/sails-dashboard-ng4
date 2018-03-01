@@ -1,5 +1,5 @@
 <div class="animated fadeIn">
-        <table class="table table-bordered table-responsive table-sm">
+        <table class="table table-bordered table-responsive table-sm resellers_table">
             <thead>
               <tr>
                 <th>Select group</th>
@@ -18,7 +18,7 @@
                 <td *ngFor="let month of months">
                   <button type="button" class="btn btn-outline-primary month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
                 </td>
-                <th>Year</th>
+                <th class="align_right">Year</th>
               </tr>
               <tr>
                 <td colspan="14" [innerHtml]="message"></td> 
@@ -26,9 +26,9 @@
               <tr>
                 <th>{{current_group_title}}</th>
                 <td *ngFor="let month of months">
-                  &nbsp;
+                  {{ getGroupSubTotal(month) | number : '1.0-0' }}
                 </td>
-                <th>&nbsp;</th>
+                <td>{{ getGroupYearTotal() | number : '1.0-0' }}</td>
               </tr>
               <tr>
                 <th><input class="form-control" placeholder="Search by name" (keyup)="searchname.next($event.target.value)"></th>

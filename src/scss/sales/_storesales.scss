@@ -27,6 +27,14 @@ table.storesales_table {
     input {
         text-align: right;
     }
+    th.align_right {
+        text-align: right;
+    }
+}
+table.resellers_table {
+    th.align_right {
+        text-align: right;
+    }
 }
 input.form-control, input.form-control:focus {
     color: black;

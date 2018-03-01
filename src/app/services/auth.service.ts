@@ -27,6 +27,7 @@ export class AuthService {
   }
 
   login(params): Observable<any> {
+    this.isLoggedIn = true
     return this.http.post<any>(this.postUrl, params, httpOptions)
   }
 

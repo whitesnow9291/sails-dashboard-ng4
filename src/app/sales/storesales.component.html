@@ -35,7 +35,7 @@
             <td *ngFor="let month of months">
               <button type="button" class="btn {{btn_outline_class}} month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
             </td>
-            <th>Year</th>
+            <th class="align_right">Year</th>
           </tr>
           <tr>
             <th colspan="14" [innerHtml] = "message"></th> 
