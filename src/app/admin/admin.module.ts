@@ -6,12 +6,14 @@ import { AdminComponent } from './admin.component';
 import { CreateComponent } from './create.component';
 import { UpdateComponent } from './update.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     AdminRoutingModule,
     CommonModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule
   ],
   declarations: [ AdminComponent, CreateComponent, UpdateComponent ]
 })

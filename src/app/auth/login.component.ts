@@ -23,12 +23,11 @@ export class LoginComponent implements OnInit {
       'command': 'signin'
     }
     this.authService.login(params).subscribe((res) => {
-      this.setMessage();
-      if (true || this.authService.isLoggedIn) {
+      if (this.authService.isLoggedIn) {
         // Get the redirect URL from our auth service
         // If no redirect has been set, use the default
-        const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
-
+        // const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
+        const redirect = '/'
         // Set our navigation extras object
         // that passes on our global query params and fragment
         const navigationExtras: NavigationExtras = {
@@ -38,6 +37,8 @@ export class LoginComponent implements OnInit {
 
         // Redirect the user
         this.router.navigate([redirect], navigationExtras);
+      } else {
+        this.message = 'Wrong email or password.'
       }
     });
   }

@@ -2,25 +2,25 @@
     <h1>
         <button type="button" class="btn btn-success" (click) = "create()">Create</button>
     </h1>
-    <table class="table admin_table">
+    <table class="table admin_table table-bordered">
         <thead class="thead-inverse">
           <tr>
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Editable</th>
+            <th>Role</th>
             <th>#</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor = "let admin of [1,2,3,4,5,6,7,8]; let i = index">
+          <tr *ngFor = "let user of userdata; let i = index">
             <td>{{i}}</td>
-            <td>Mark</td>
-            <td>marktel@gmail.com</td>
-            <td>Yes</td>
+            <td>{{ user.display_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ getRoleTitle(user.role_id) }}</td>
             <td>
-              <button type="button" class="btn btn-primary btn-sm" (click) = "update()"><i class="icon-pencil"></i></button>
-              <button type="button" class="btn btn-danger btn-sm" (click) = "remove()"><i class="icon-close"></i></button>
+              <button type="button" class="btn btn-primary btn-sm" (click) = "update(user)"><i class="icon-pencil"></i></button>
+              <button type="button" class="btn btn-danger btn-sm" (click) = "remove(user)"><i class="icon-close"></i></button>
             </td>
           </tr>
         </tbody>

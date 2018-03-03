@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SalesDataService } from '../services/salesdata';
+import { AuthService } from '../services/auth.service';
 import { stores, years, months, Month } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
@@ -36,7 +37,9 @@ export class StoreComponent implements OnInit {
 
   targetInputYearData: any;
   targetEmployeeInputYearData: any;
-  constructor(public elRef: ElementRef, public salesdata: SalesDataService) { }
+
+  current_user: any;
+  constructor(public elRef: ElementRef, public salesdata: SalesDataService, public authservice: AuthService) { }
   ngOnInit() {
     const params = {
       'command': 'getStores'
@@ -55,6 +58,8 @@ export class StoreComponent implements OnInit {
       this.targetInputYearData.push(0)
     }
     this.targetEmployeeInputYearData = []
+    this.current_user = this.authservice.current_user
+    console.log(this.current_user.role_id)
   }
   private setOptions() {
     this.optionsSub = Observable.combineLatest(

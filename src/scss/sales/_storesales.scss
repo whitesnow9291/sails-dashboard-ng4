@@ -14,6 +14,9 @@ table.admin_table {
     button.btn {
         width: auto;
     }
+    td {
+        text-align: left;
+    }
 }
 table.storesales_table {
     .btn-success {
@@ -39,7 +42,7 @@ table.resellers_table {
 input.form-control, input.form-control:focus {
     color: black;
 }
-.register_div {
+.register_div, .userupdate_div {
     .store_div {
         width: 50%;
         float: right;

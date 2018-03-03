@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       'store': -1
     }
   }
- 
+
   onRoleChange(newValue) {
     this.user.role = newValue;  // don't forget to update the model here
   }
