@@ -5,16 +5,29 @@ import { FormsModule } from '@angular/forms';
 
 import { StoreComponent } from './storesales.component';
 import { ResellerComponent } from './resellersales.component';
+import { CampaigndashboardComponent } from './campaigndashboard.component';
+import { CampaignlistComponent } from './campaignlist.component';
 import { SalesRoutingModule } from './sales-routing.module';
 
+// Datepicker
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+// Ng2-select
+import { SelectModule } from 'ng2-select';
+// Datepicker
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap';
 import { HighlightDirective } from '../shared/highlight.directive';
 @NgModule({
   imports: [
     SalesRoutingModule,
     ChartsModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    SelectModule,
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot(),
   ],
-  declarations: [ StoreComponent, ResellerComponent, HighlightDirective ]
+  declarations: [ StoreComponent, ResellerComponent, HighlightDirective, CampaignlistComponent, CampaigndashboardComponent ]
 })
 export class SalesModule { }

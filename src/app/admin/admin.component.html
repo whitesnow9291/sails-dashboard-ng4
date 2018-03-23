@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
     <h1>
-        <button type="button" class="btn btn-success" (click) = "create()">Create</button>
+        <button type="button" class="btn btn-success" (click) = "create()" [disabled]="current_user.role_id>1">Create</button>
     </h1>
     <table class="table admin_table table-bordered">
         <thead class="thead-inverse">

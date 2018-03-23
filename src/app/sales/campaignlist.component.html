@@ -1,0 +1,154 @@
+<div class="animated fadeIn compaignlist">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Choose Campaign
+            </div>
+            <div class="card-block">
+                <div class="centered">
+                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
+                    <button type="button" class="btn btn-outline-primary group_btn" >Dropship</button>
+                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
+                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
+                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
+                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
+                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas baseChart class="chart"
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColours"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.col-->
+    <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> Campaign Sales history
+          </div>
+          <div class="card-block">
+            <button type="button" class="btn btn-primary mb-1" data-toggle="modal" (click)="primaryModal.show()">
+                    Create a new campaign
+            </button>
+            <table class="table table-bordered table-sm">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>SKU</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Total sold</th>
+                  <th>Total sales</th>
+                  <th>Manage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
+                  <td>{{ item }}</td>
+                  <td>{{ item }}</td>
+                  <td>{{ item }}</td>
+                  <td>{{ item }}</td>
+                  <td>{{ item }}</td>
+                  <td>{{ item }}</td>
+                  <td>
+                    <div class="input-group">
+                        <div class="input-group-btn" dropdown>
+                          <button type="button" class="btn btn-primary" dropdownToggle>
+                            <i class="icon-settings"></i>
+                          </button>
+                          <div class="dropdown-menu" *dropdownMenu>
+                            <a class="dropdown-item" href="#">Edit</a>
+                            <a class="dropdown-item" href="#">Remove</a>
+                          </div>
+                        </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal title</h4>
+                <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <td class="text-left align-middle">Name</td>
+                            <td class="text-left align-middle"><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left align-middle">SKU</td>
+                            <td class="text-left align-middle"><input type="text" /></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left align-middle">From To</td>
+                            <td class="text-left align-middle">
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left align-middle">Publish in stores</td>
+                            <td class="text-left">
+                                <div class="col-md-9">
+                                    <div class="checkbox">
+                                        <label for="checkbox1">
+                                        <input id="checkbox1" name="checkbox1" type="checkbox" value="option1"> Dropship
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label for="checkbox2">
+                                        <input id="checkbox2" name="checkbox2" type="checkbox" value="option2"> Facebook
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label for="checkbox3">
+                                        <input id="checkbox3" name="checkbox3" type="checkbox" value="option3"> Online
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label for="checkbox4">
+                                        <input id="checkbox4" name="checkbox4" type="checkbox" value="option4"> POS
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label for="checkbox5">
+                                        <input id="checkbox5" name="checkbox5" type="checkbox" value="option5"> Reseller
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label for="checkbox6">
+                                        <input id="checkbox6" name="checkbox6" type="checkbox" value="option6"> Retail
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="primaryModal.hide()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="saveChange(primaryModal)">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 

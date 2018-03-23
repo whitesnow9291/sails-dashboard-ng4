@@ -59,7 +59,6 @@ export class StoreComponent implements OnInit {
     }
     this.targetEmployeeInputYearData = []
     this.current_user = this.authservice.current_user
-    console.log(this.current_user.role_id)
   }
   private setOptions() {
     this.optionsSub = Observable.combineLatest(

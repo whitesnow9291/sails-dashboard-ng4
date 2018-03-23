@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { SalesDataService } from '../services/salesdata';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   templateUrl: 'admin.component.html'
@@ -8,7 +9,8 @@ import { SalesDataService } from '../services/salesdata';
 export class AdminComponent implements OnInit {
   userdata: any = [];
   userrole: String [];
-  constructor(public router: Router, public elRef: ElementRef, public salesdata: SalesDataService) { }
+  current_user: any;
+  constructor(public router: Router, public elRef: ElementRef, public salesdata: SalesDataService, public authservice: AuthService) { }
   ngOnInit() {
     const params = {
       'command': 'getUserList'
@@ -16,8 +18,19 @@ export class AdminComponent implements OnInit {
     this.userrole = ['Admin', 'Supervisor', 'Staff', 'Staff']
     this.salesdata.getUserList(params)
     .subscribe(data => {
+      // this.userdata = data
       this.userdata = data
+      for (let i = 0; i < this.userdata.length - 1; i++) {
+        for (let j = i + 1; j < this.userdata.length; j++) {
+          if ((this.userdata[i].display_name > this.userdata[j].display_name)) {
+            const temp = this.userdata[i];
+            this.userdata[i] = this.userdata[j]
+            this.userdata[j] = temp
+          }
+        }
+      }
     });
+    this.current_user = this.authservice.current_user
   }
   getRoleTitle (role_id) {
     const role_id_n = Number(role_id)

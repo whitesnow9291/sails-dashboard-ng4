@@ -54,3 +54,11 @@ input.form-control, input.form-control:focus {
         padding-right: 10px;
     }
 }
+.compaignlist {
+    .centered {
+        text-align: center;
+    }
+    .modal-backdrop {
+        z-index: 0;
+    }
+}

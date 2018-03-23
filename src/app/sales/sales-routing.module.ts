@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { StoreComponent } from './storesales.component';
 import { ResellerComponent } from './resellersales.component';
+import { CampaigndashboardComponent } from './campaigndashboard.component';
+import { CampaignlistComponent } from './campaignlist.component';
 
 const routes: Routes = [
   {
@@ -22,6 +24,20 @@ const routes: Routes = [
     component: ResellerComponent,
     data: {
       title: 'Reseller sales'
+    }
+  },
+  {
+    path: 'campaigndashboard',
+    component: CampaigndashboardComponent,
+    data: {
+      title: 'Campaign Dashboard'
+    }
+  },
+  {
+    path: 'campaignlist',
+    component: CampaignlistComponent,
+    data: {
+      title: 'Campaign List'
     }
   }
 ];
