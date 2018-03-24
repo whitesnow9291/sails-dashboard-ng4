@@ -34,6 +34,10 @@ export class SalesDataService {
     {
       id: '5',
       title: '1500'
+    },
+    {
+      id: '0',
+      title: 'All groups'
     }
   ];
   stores: any = [

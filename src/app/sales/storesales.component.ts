@@ -6,6 +6,7 @@ import { stores, years, months, Month } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 declare var jquery: any;
 declare var $: any;
@@ -59,6 +60,31 @@ export class StoreComponent implements OnInit {
     }
     this.targetEmployeeInputYearData = []
     this.current_user = this.authservice.current_user
+  }
+  printMap() {
+    window.print()
+  }
+  toCSV() {
+    if (!this.current_target) {
+      alert ('No data to save')
+      return
+    }
+    let data = []
+    const trs = $('table.storesales_table tbody tr')
+    for (let i = 0; i < trs.length; i ++ ) {
+      const tds = $(trs[i]).children()
+      let record = []
+      for (let j = 0; j < tds.length; j ++ ) {
+        const targetmodeinput = $(tds[j]).children('input')
+        if (targetmodeinput.length) {
+          record.push($(targetmodeinput).val().trim())
+        } else {
+          record.push($(tds[j]).text().trim())
+        }
+      }
+      data.push(record)
+    }
+    new Angular2Csv(data, 'report-store');
   }
   private setOptions() {
     this.optionsSub = Observable.combineLatest(

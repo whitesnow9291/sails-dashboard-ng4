@@ -33,10 +33,34 @@ table.storesales_table {
     th.align_right {
         text-align: right;
     }
+    td.bold {
+        font-weight: bolder;
+    }
 }
 table.resellers_table {
     th.align_right {
         text-align: right;
+    }
+    td.bold {
+        font-weight: bolder;
+    }
+}
+@media print {
+    .app-header.navbar {
+        display: none;
+    }
+    table.resellers_table, table.storesales_table {
+        button.btn-outline-primary, .btn-outline-success {
+            opacity: 0.2;
+        }
+        button.btn-primary, .btn-success {
+            color: black;
+        }
+        td button {
+            padding: 0;
+            border: none;
+            margin: 0;
+        }
     }
 }
 input.form-control, input.form-control:focus {

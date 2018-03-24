@@ -6,6 +6,12 @@
                 <td *ngFor="let group of groups">
                   <button type="button" class="btn btn-outline-primary group_btn" (click)="groupChanged($event, group)">{{group.title}}</button>
                 </td>
+                <td>
+                  <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+                </td>
+                <td>
+                  <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+                </td>
               </tr>
               <tr>
                 <th>Select year</th>
@@ -24,7 +30,7 @@
                 <td colspan="14" [innerHtml]="message"></td> 
               </tr>
               <tr>
-                <th>{{current_group_title}}</th>
+                <td class="bold">{{current_group_title}}</td>
                 <td *ngFor="let month of months">
                   {{ getGroupSubTotal(month) | number : '1.0-0' }}
                 </td>
@@ -36,7 +42,7 @@
             </thead>
             <tbody *ngIf = "resellerSearchResult != null">
               <tr *ngFor="let record of resellerSearchResult" >
-                <th scope="row">{{ record.profile.customer_firstname + ' ' + record.profile.customer_lastname }} </th>
+                <td class="bold" scope="row">{{ record.profile.customer_firstname + ' ' + record.profile.customer_lastname }} </td>
                 <td *ngFor="let month of months">
                   {{ getSubTotal(month.no, record.subtotals) | number : '1.0-0'}}
                 </td>

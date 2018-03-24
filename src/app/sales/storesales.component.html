@@ -12,6 +12,12 @@
             <td>
               <button type="button" class="btn btn-danger" (click)="saveTargets()" [disabled] = "!canSave || current_user.role_id>1" [hidden] = "current_target != 'targets'">Save</button>
             </td>
+            <td>
+              <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+            </td>
           </tr>
           <tr>
             <th>Select store</th>
@@ -45,7 +51,7 @@
           <ng-container *ngIf="current_target == 'targets'">
             <ng-container *ngIf="actualtargetdata != null">
               <tr class="table-success">
-                <th>Actual</th>
+                <td class="bold">Actual</td>
                 <td *ngFor="let month of months">
                   {{ getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) | number : '1.0-0' }}
                 </td>
@@ -54,7 +60,7 @@
                 </td>
               </tr>
               <tr class="table-info">
-                  <th>Target</th>
+                  <td class="bold">Target</td>
                   <td *ngFor="let month of months">
                     <input class="form-control" type="number" [disabled] ="current_user.role_id>1" [hidden] = "months_status[month.no-1] == false" [(ngModel)] = "targetInputYearData[month.no-1]">
                     <ng-container *ngIf="months_status[month.no-1] == false">
@@ -67,7 +73,7 @@
                   </td>
               </tr>
               <tr class="table-danger">
-                <th>Variance</th>
+                <td class="bold">Variance</td>
                 <td *ngFor="let month of months">
                   {{ (getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) - targetInputYearData[month.no-1]) | number : '1.0-0' || '' }}
                 </td>
@@ -78,7 +84,7 @@
             </ng-container>
             <ng-container *ngIf="targetdata!=null">
               <tr *ngFor="let employee of targetEmployeeInputYearData">
-                <th scope="row">{{ employee.employee.employee_display_name }} </th>
+                <td class="bold" scope="row">{{ employee.employee.employee_display_name }} </td>
                 <td *ngFor="let month of months">
                   <input class="form-control" type="number" [disabled] ="current_user.role_id>1" [hidden] = "months_status[month.no-1] == false" [(ngModel)]="employee.subtotal[month.no-1]" step=".01">
                   <ng-container *ngIf="months_status[month.no-1] == false">
@@ -94,7 +100,7 @@
           <ng-container *ngIf="current_target == 'actuals'">
             <ng-container *ngIf="actualtargetdata != null">
               <tr class="table-success">
-                  <th>Actual</th>
+                  <td class="bold">Actual</td>
                   <td *ngFor="let month of months">
                     {{ getTotalActualFromMonth(month.no, actualtargetdata.actual.month_target) | number : '1.0-0' }}
                   </td>
@@ -103,7 +109,7 @@
                   </td>
                 </tr>
                 <tr class="table-info">
-                  <th>Target</th>
+                  <td class="bold">Target</td>
                   <td *ngFor="let month of months">
                     {{ getTotalTargetFromMonth(month.no, actualtargetdata.target.month_target) | number : '1.0-0'}}
                   </td>
@@ -112,7 +118,7 @@
                   </td>
                 </tr>
                 <tr class="table-danger">
-                  <th>Variance</th>
+                  <td class="bold">Variance</td>
                   <td *ngFor="let month of months">
                       {{ getVarianceActualTab(month.no) | number : '1.0-0' }}
                   </td>
@@ -121,7 +127,7 @@
             </ng-container>
             <ng-container *ngIf="actualdata!=null">
               <tr *ngFor="let employee of actualdata">
-                <th scope="row">{{ employee.employee.employee_name }} </th>
+                <td class="bold" scope="row">{{ employee.employee.employee_name }} </td>
                 <td *ngFor="let month of months">
                   {{ getSubTotal(month.no, employee.subtotals) | number : '1.0-0'}}
                 </td>

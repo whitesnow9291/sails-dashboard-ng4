@@ -5,6 +5,7 @@ import { years, months } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 declare var jquery: any;
 declare var $: any;
@@ -34,6 +35,24 @@ export class ResellerComponent implements OnInit {
     for (let i = 0; i < 12; i ++) {
       this.months_status.push(false)
     }
+  }
+  toCSV() {
+    let data = []
+    const trs = $('table.resellers_table tbody tr')
+    for (let i = 0; i < trs.length; i ++ ) {
+      const tds = $(trs[i]).children()
+      let record = []
+      for (let j = 0; j < tds.length; j ++ ) {
+        const targetmodeinput = $(tds[j]).children('input')
+        if (targetmodeinput.length) {
+          record.push($(targetmodeinput).val().trim())
+        } else {
+          record.push($(tds[j]).text().trim())
+        }
+      }
+      data.push(record)
+    }
+    new Angular2Csv(data, 'report-store');
   }
   private setOptions() {
     this.optionsSub = Observable.combineLatest(
@@ -105,6 +124,9 @@ export class ResellerComponent implements OnInit {
   }
   getGroups () {
     this.groups = this.salesdata.getGroups()
+  }
+  printMap() {
+    window.print()
   }
   groupChanged ($event, group) {
     this.current_group_title = group.title
