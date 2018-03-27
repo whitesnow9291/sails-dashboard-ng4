@@ -9,19 +9,23 @@
             <button type="button" class="btn btn-primary mb-1" data-toggle="modal" (click)="createCampaign(primaryModal)">
                 Create a new campaign
             </button>
-            <table class="table table-bordered table-sm">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>SKU</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Total sold</th>
-                  <th>Total sales</th>
-                  <th>Manage</th>
-                </tr>
-              </thead>
+            
+            <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+            
+            
+            <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+              
+            <table class="table table-bordered table-sm campaigntable">
               <tbody>
+                <tr>
+                    <td class="bold">Name</td>
+                    <td class="bold">SKU</td>
+                    <td class="bold">Start Date</td>
+                    <td class="bold">End Date</td>
+                    <td class="bold">Total sold</td>
+                    <td class="bold">Total sales</td>
+                    <td class="bold">Manage</td>
+                </tr>
                 <tr *ngFor="let item of campaigns; let i = index">
                   <td>{{ item.name }}</td>
                   <td>{{ item.sku }}</td>
@@ -54,7 +58,7 @@
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Modal title</h4>
+                <h4 class="modal-title">Campaign Info</h4>
                 <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>

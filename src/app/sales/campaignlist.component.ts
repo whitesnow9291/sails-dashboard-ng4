@@ -5,6 +5,7 @@ import { years, months } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
+import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 declare var jquery: any;
 declare var $: any;
@@ -141,6 +142,27 @@ export class CampaignlistComponent implements OnInit {
       }
     });
     modal.hide();
+  }
+  printMap() {
+    window.print()
+  }
+  toCSV() {
+    let data = []
+    const trs = $('table.campaigntable tbody tr')
+    for (let i = 0; i < trs.length; i ++ ) {
+      const tds = $(trs[i]).children()
+      let record = []
+      for (let j = 0; j < tds.length; j ++ ) {
+        const targetmodeinput = $(tds[j]).children('input')
+        if (targetmodeinput.length) {
+          record.push($(targetmodeinput).val().trim())
+        } else {
+          record.push($(tds[j]).text().trim())
+        }
+      }
+      data.push(record)
+    }
+    new Angular2Csv(data, 'report-store');
   }
 }
 
