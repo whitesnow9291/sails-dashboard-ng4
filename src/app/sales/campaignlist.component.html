@@ -1,42 +1,13 @@
 <div class="animated fadeIn compaignlist">
     <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <i class="fa fa-align-justify"></i> Choose Campaign
-            </div>
-            <div class="card-block">
-                <div class="centered">
-                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
-                    <button type="button" class="btn btn-outline-primary group_btn" >Dropship</button>
-                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
-                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
-                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
-                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
-                    <button type="button" class="btn btn-outline-primary group_btn" >All store: 144</button>
-                </div>
-                <div class="chart-wrapper">
-                    <canvas baseChart class="chart"
-                    [datasets]="lineChartData"
-                    [labels]="lineChartLabels"
-                    [options]="lineChartOptions"
-                    [colors]="lineChartColours"
-                    [legend]="lineChartLegend"
-                    [chartType]="lineChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/.col-->
-    <div class="col-lg-12">
+            {{test | json}}
         <div class="card">
           <div class="card-header">
             <i class="fa fa-align-justify"></i> Campaign Sales history
           </div>
           <div class="card-block">
-            <button type="button" class="btn btn-primary mb-1" data-toggle="modal" (click)="primaryModal.show()">
-                    Create a new campaign
+            <button type="button" class="btn btn-primary mb-1" data-toggle="modal" (click)="createCampaign(primaryModal)">
+                Create a new campaign
             </button>
             <table class="table table-bordered table-sm">
               <thead>
@@ -51,13 +22,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
-                  <td>{{ item }}</td>
-                  <td>{{ item }}</td>
-                  <td>{{ item }}</td>
-                  <td>{{ item }}</td>
-                  <td>{{ item }}</td>
-                  <td>{{ item }}</td>
+                <tr *ngFor="let item of campaigns; let i = index">
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.sku }}</td>
+                  <td>{{ item.start_at }}</td>
+                  <td>{{ item.end_at }}</td>
+                  <td>{{ item.sold }}</td>
+                  <td>{{ item.sales }}</td>
                   <td>
                     <div class="input-group">
                         <div class="input-group-btn" dropdown>
@@ -65,8 +36,8 @@
                             <i class="icon-settings"></i>
                           </button>
                           <div class="dropdown-menu" *dropdownMenu>
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item" href="#">Remove</a>
+                            <a class="dropdown-item" (click) = "updateCampaign(item, i, primaryModal)">Edit</a>
+                            <a class="dropdown-item" (click) = "removeCampaign(i)">Remove</a>
                           </div>
                         </div>
                     </div>
@@ -79,7 +50,7 @@
     </div>
 </div>
 
-<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #primaryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,15 +60,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-sm">
+                <table class="table table-bordered table-sm" *ngIf="updatedCampaign">
                     <tbody>
                         <tr>
                             <td class="text-left align-middle">Name</td>
-                            <td class="text-left align-middle"><input type="text" /></td>
+                            <td class="text-left align-middle"><input type="text" [(ngModel)] = "updatedCampaign.name"/></td>
                         </tr>
                         <tr>
                             <td class="text-left align-middle">SKU</td>
-                            <td class="text-left align-middle"><input type="text" /></td>
+                            <td class="text-left align-middle"><input type="text" [(ngModel)] = "updatedCampaign.sku"/></td>
                         </tr>
                         <tr>
                             <td class="text-left align-middle">From To</td>
@@ -109,34 +80,10 @@
                             <td class="text-left align-middle">Publish in stores</td>
                             <td class="text-left">
                                 <div class="col-md-9">
-                                    <div class="checkbox">
-                                        <label for="checkbox1">
-                                        <input id="checkbox1" name="checkbox1" type="checkbox" value="option1"> Dropship
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkbox2">
-                                        <input id="checkbox2" name="checkbox2" type="checkbox" value="option2"> Facebook
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkbox3">
-                                        <input id="checkbox3" name="checkbox3" type="checkbox" value="option3"> Online
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkbox4">
-                                        <input id="checkbox4" name="checkbox4" type="checkbox" value="option4"> POS
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkbox5">
-                                        <input id="checkbox5" name="checkbox5" type="checkbox" value="option5"> Reseller
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label for="checkbox6">
-                                        <input id="checkbox6" name="checkbox6" type="checkbox" value="option6"> Retail
+                                    <div class="checkbox" *ngFor = "let option of storeoptions; let i = index">
+                                        <label for="checkbox{{i}}">
+                                            <input id="checkbox{{i}}" type="checkbox" value="{{option.value}}"
+                                            [(ngModel)]="option.checked">{{option.name}}
                                         </label>
                                     </div>
                                 </div>

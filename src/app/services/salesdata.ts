@@ -96,6 +96,18 @@ export class SalesDataService {
   updateUser(params): Observable<any> {
     return this.http.post<any>(this.postUrl, params, httpOptions)
   }
+  saveCampaign(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
+  }
+  getCampaigns(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
+  }
+  removeCampaign(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
+  }
+  getSoldAndSalesOfStore(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
+  }
 }
 
 

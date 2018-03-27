@@ -1,5 +1,6 @@
 <div class="animated fadeIn">
   <div class="col-lg-12">
+    {{test | json}}
     <div class="card">
       <div class="card-header">
         <i class="fa fa-align-justify"></i> Choose Campaign
@@ -9,20 +10,18 @@
           <div class="col-6">
               <ng-select
                 [multiple]="false"
-                [items]="items"
-                (data)="refreshValue($event)"
-                (selected)="selected($event)"
-                (removed)="removed($event)"
+                [items]="campaignOptions"
+                (selected)="campaignSelected($event)"
                 placeholder="Select Campaign"
                 >
               </ng-select>
           </div>
           <div class="col-6">
-            <select class="form-control" id="ccmonth">
-              <option>Today</option>
-              <option>Last 7 days</option>
-              <option>Last 14 days</option>
-              <option>Last 31 days</option>
+            <select class="form-control" id="ccmonth" (change)="changeday($event.target.value)">
+              <option value="0">Today</option>
+              <option value="7">Last 7 days</option>
+              <option value="14">Last 14 days</option>
+              <option value="31">Last 31 days</option>
             </select>
           </div>
         </div>
@@ -36,35 +35,56 @@
         <i class="fa fa-align-justify"></i> Campaign Sales history
       </div>
       <div class="card-block">
-        <table class="table table-bordered">
+        <table class="table table-bordered sailandsoldtable">
           <thead>
             <tr>
-              <th>Launch Date</th>
-              <th>Total sold</th>
-              <th>Total sales</th>
-              <th>Sold last 7 days</th>
-              <th>Sales last 7 days</th>
-              <th>Sold last 14 days</th>
-              <th>Sales last 14 days</th>
-              <th>Sold last 31 days</th>
-              <th>Sales last 31 days</th>
+              <th><p>Launch Date</p> <p class="red">{{current_campaign?.start_at}}</p></th>
+              <th><p>Total sold</p> <p class="red">{{getTotalSold()}}</p></th>
+              <th><p>Total sales</p> <p class="red">{{getTotalSales()}}</p></th>
+              <th><p>{{current_day==0?'Today Sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold()}}</p></th>
+              <th><p>{{current_day==0?'Today Sales':'Sales last '+current_day+' days'}}</p><p class="red">{{getDayrangeSales()}}</p></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
-              <td>{{ item }}</td>
+            <tr *ngFor="let item of tabledata">
+              <td>{{ storeName(item.store_id) }}</td>
+              <td>{{ item.totalsold }}</td>
+              <td>{{ item.totalsales }}</td>
+              <td>{{ item.dayrangesold }}</td>
+              <td>{{ item.dayrangesales }}</td>
             </tr>
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
+  <!--/.col-->
+
+  <div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i> Choose Campaign
+        </div>
+        <div class="card-block">
+            <div class="centered">
+                <button type="button" class="btn group_btn" [class.btn-primary] = "current_store==0" 
+                  [class.btn-outline-primary] = "current_store!=0" (click) = "changeStore(0)">{{'All stores:'+getDayrangeSold()}}</button>
+                <button type="button" class="btn group_btn" [class.btn-outline-primary] = "current_store!=item.store_id" (click) = "changeStore(item.store_id)"
+                *ngFor="let item of tabledata"
+                [class.btn-primary] = "current_store==item.store_id">{{storeName(item.store_id)+':'+item.dayrangesold}}</button>
+            </div>
+            <div class="chart-wrapper">
+                <canvas baseChart class="chart"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColours"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+            </div>
+        </div>
     </div>
   </div>
   <!--/.col-->
