@@ -178,5 +178,11 @@ export class CampaigndashboardComponent implements OnInit {
       }
     }
   }
+  chartHovered($event) {
+
+  }
+  chartClicked($event) {
+    
+  }
 }
 
