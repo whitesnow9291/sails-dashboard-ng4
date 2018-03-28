@@ -1,5 +1,5 @@
-.w-33 {
-    width: 33%;
+td.w-20 {
+    width: 15% !important;
 }
 table {
     button.btn {
@@ -11,6 +11,9 @@ table {
     tr td {
         width: 7%;
         text-align: right;
+    }
+    td.bold {
+        font-weight: bolder;
     }
 }
 table.admin_table {
@@ -36,20 +39,17 @@ table.storesales_table {
     th.align_right {
         text-align: right;
     }
-    td.bold {
-        font-weight: bolder;
-    }
 }
 table.resellers_table {
     th.align_right {
         text-align: right;
     }
-    td.bold {
-        font-weight: bolder;
-    }
 }
 @media print {
     .app-header.navbar {
+        display: none;
+    }
+    .sales_chart{
         display: none;
     }
     table.resellers_table, table.storesales_table, table.campaigntable {

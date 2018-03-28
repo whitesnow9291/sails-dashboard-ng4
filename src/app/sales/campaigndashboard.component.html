@@ -35,23 +35,26 @@
         <i class="fa fa-align-justify"></i> Campaign Sales history
       </div>
       <div class="card-block">
+
+          <div class="mb-3 float-right">
+            <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+            <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+          </div>
         <table class="table table-bordered sailandsoldtable">
-          <thead>
-            <tr>
-              <th class="w-33"><p>Launch Date</p> <p class="red">{{current_campaign?.start_at | date:'d-MMM-y' }}</p></th>
-              <th><p>Total sold</p> <p class="red">{{getTotalSold()}}</p></th>
-              <th><p>Total sales</p> <p class="red">{{getTotalSales()}}</p></th>
-              <th><p>{{current_day==0?'Today Sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold()}}</p></th>
-              <th><p>{{current_day==0?'Today Sales':'Sales last '+current_day+' days'}}</p><p class="red">{{getDayrangeSales()}}</p></th>
-            </tr>
-          </thead>
           <tbody>
+            <tr>
+              <td class="w-20 bold"><p>Launch Date</p> <p class="red">{{current_campaign?.start_at | date:'d-MMM-y' }}</p></td>
+              <td class="bold"><p>Total sold</p> <p class="red">{{getTotalSold() | number : '1.0-0'}}</p></td>
+              <td class="bold"><p>Total sales</p> <p class="red">{{getTotalSales() | number : '1.0-0'}}</p></td>
+              <td class="bold"><p>{{current_day==0?'Today Sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold() | number : '1.0-0'}}</p></td>
+              <td class="bold"><p>{{current_day==0?'Today Sales':'Sales last '+current_day+' days'}}</p><p class="red">{{getDayrangeSales() | number : '1.0-0'}}</p></td>
+            </tr>
             <tr *ngFor="let item of tabledata">
               <td class="w-33">{{ storeName(item.store_id) }}</td>
-              <td>{{ item.totalsold }}</td>
-              <td>{{ item.totalsales }}</td>
-              <td>{{ item.dayrangesold }}</td>
-              <td>{{ item.dayrangesales }}</td>
+              <td>{{ item.totalsold | number : '1.0-0'}}</td>
+              <td>{{ item.totalsales | number : '1.0-0'}}</td>
+              <td>{{ item.dayrangesold | number : '1.0-0'}}</td>
+              <td>{{ item.dayrangesales | number : '1.0-0'}}</td>
             </tr>
           </tbody>
         </table>
@@ -60,7 +63,7 @@
   </div>
   <!--/.col-->
 
-  <div class="col-lg-12">
+  <div class="col-lg-12 sales_chart">
     <div class="card">
         <div class="card-header">
             <i class="fa fa-align-justify"></i> Choose Campaign
