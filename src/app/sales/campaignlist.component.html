@@ -29,8 +29,8 @@
                 <tr *ngFor="let item of campaigns; let i = index">
                   <td>{{ item.name }}</td>
                   <td>{{ item.sku }}</td>
-                  <td>{{ item.start_at }}</td>
-                  <td>{{ item.end_at }}</td>
+                  <td>{{ item.start_at | date:'d-MMM-y' }}</td>
+                  <td>{{ item.end_at | date:'d-MMM-y' }}</td>
                   <td>{{ item.sold }}</td>
                   <td>{{ item.sales }}</td>
                   <td>

@@ -38,7 +38,7 @@
         <table class="table table-bordered sailandsoldtable">
           <thead>
             <tr>
-              <th><p>Launch Date</p> <p class="red">{{current_campaign?.start_at}}</p></th>
+              <th class="w-33"><p>Launch Date</p> <p class="red">{{current_campaign?.start_at | date:'d-MMM-y' }}</p></th>
               <th><p>Total sold</p> <p class="red">{{getTotalSold()}}</p></th>
               <th><p>Total sales</p> <p class="red">{{getTotalSales()}}</p></th>
               <th><p>{{current_day==0?'Today Sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold()}}</p></th>
@@ -47,7 +47,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of tabledata">
-              <td>{{ storeName(item.store_id) }}</td>
+              <td class="w-33">{{ storeName(item.store_id) }}</td>
               <td>{{ item.totalsold }}</td>
               <td>{{ item.totalsales }}</td>
               <td>{{ item.dayrangesold }}</td>

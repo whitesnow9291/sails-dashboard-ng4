@@ -63,7 +63,7 @@ export class CampaignlistComponent implements OnInit {
     this.updatedCampaign = {
       id: 0,
       name: '',
-      sku: 0,
+      sku: '',
       start_at: new Date(),
       end_at: new Date(),
       stores: '',
@@ -111,6 +111,10 @@ export class CampaignlistComponent implements OnInit {
         storestr += element.value + ','
       }
     });
+    if (this.updatedCampaign.sku === '0') {
+      alert(`SKU shouldn't be 0`)
+      return
+    }
     this.updatedCampaign.start_at = this.bsRangeValue[0]
     this.updatedCampaign.end_at = this.bsRangeValue[1]
     this.updatedCampaign.stores = storestr
