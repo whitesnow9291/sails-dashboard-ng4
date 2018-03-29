@@ -159,7 +159,7 @@ export class CampaigndashboardComponent implements OnInit {
     const header = ['Campaign sales history']
     const dayrangesoldtitle = this.current_day === 0 ? 'Today sold' : 'Sold last ' + this.current_day + ' days'
     const dayrangesalestitle = this.current_day === 0 ? 'Today sales' : 'Sales last ' + this.current_day + ' days'
-    const subtitles = ['Lauch Date', 'Total sold', dayrangesoldtitle, dayrangesalestitle]
+    const subtitles = ['Launch date', 'Total sold', dayrangesoldtitle, dayrangesalestitle]
     const sumValues = []
 
     const headertds = $('table.sailandsoldtable thead tr').first().children('td')

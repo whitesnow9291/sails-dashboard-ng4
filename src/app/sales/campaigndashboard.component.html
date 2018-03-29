@@ -12,7 +12,7 @@
                 [multiple]="false"
                 [items]="campaignOptions"
                 (selected)="campaignSelected($event)"
-                placeholder="Select Campaign"
+                placeholder="Select campaign"
                 >
               </ng-select>
           </div>
@@ -43,11 +43,11 @@
         <table class="table table-bordered sailandsoldtable">
           <thead>
             <tr>
-              <td class="w-20 bold"><p>Launch Date</p> <p class="red">{{current_campaign?.start_at | date:'d-MMM-y' }}</p></td>
+              <td class="w-20 bold"><p>Launch date</p> <p class="red">{{current_campaign?.start_at | date:'d-MMM-y' }}</p></td>
               <td class="bold"><p>Total sold</p> <p class="red">{{getTotalSold() | number : '1.0-0'}}</p></td>
               <td class="bold"><p>Total sales</p> <p class="red">{{getTotalSales() | number : '1.0-0'}}</p></td>
-              <td class="bold"><p>{{current_day==0?'Today Sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold() | number : '1.0-0'}}</p></td>
-              <td class="bold"><p>{{current_day==0?'Today Sales':'Sales last '+current_day+' days'}}</p><p class="red">{{getDayrangeSales() | number : '1.0-0'}}</p></td>
+              <td class="bold"><p>{{current_day==0?'Today sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold() | number : '1.0-0'}}</p></td>
+              <td class="bold"><p>{{current_day==0?'Today sales':'Sales last '+current_day+' days'}}</p><p class="red">{{getDayrangeSales() | number : '1.0-0'}}</p></td>
             </tr>
           </thead>
           <tbody>
