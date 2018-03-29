@@ -7,7 +7,7 @@
       </div>
       <div class="card-block">
         <div class="row">
-          <div class="col-6">
+          <div class="col-10">
               <ng-select
                 [multiple]="false"
                 [items]="campaignOptions"
@@ -16,7 +16,7 @@
                 >
               </ng-select>
           </div>
-          <div class="col-6">
+          <div class="col-2">
             <select class="form-control" id="ccmonth" (change)="changeday($event.target.value)">
               <option value="0">Today</option>
               <option value="7">Last 7 days</option>
