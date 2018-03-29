@@ -156,10 +156,23 @@ export class CampaigndashboardComponent implements OnInit {
   }
   toCSV() {
     let data = []
+    const header = ['Campaign sales history']
+    const dayrangesoldtitle = this.current_day === 0 ? 'Today sold' : 'Sold last ' + this.current_day + ' days'
+    const dayrangesalestitle = this.current_day === 0 ? 'Today sales' : 'Sales last ' + this.current_day + ' days'
+    const subtitles = ['Lauch Date', 'Total sold', dayrangesoldtitle, dayrangesalestitle]
+    const sumValues = []
+
+    const headertds = $('table.sailandsoldtable thead tr').first().children('td')
+    for (let i = 0; i < headertds.length; i ++ ) {
+      sumValues.push($(headertds[i]).children('p.red').text().trim())
+    }
+    data.push(header)
+    data.push(subtitles)
+    data.push(sumValues)
     const trs = $('table.sailandsoldtable tbody tr')
     for (let i = 0; i < trs.length; i ++ ) {
       const tds = $(trs[i]).children()
-      let record = []
+      const record = []
       for (let j = 0; j < tds.length; j ++ ) {
         const targetmodeinput = $(tds[j]).children('input')
         if (targetmodeinput.length) {

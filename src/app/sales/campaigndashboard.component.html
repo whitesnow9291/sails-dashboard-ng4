@@ -3,7 +3,7 @@
     {{test | json}}
     <div class="card">
       <div class="card-header">
-        <i class="fa fa-align-justify"></i> Choose Campaign
+        <i class="fa fa-align-justify"></i> Select campaign
       </div>
       <div class="card-block">
         <div class="row">
@@ -32,7 +32,7 @@
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header">
-        <i class="fa fa-align-justify"></i> Campaign Sales history
+        <i class="fa fa-align-justify"></i> Campaign sales history
       </div>
       <div class="card-block">
 
@@ -41,7 +41,7 @@
             <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
           </div>
         <table class="table table-bordered sailandsoldtable">
-          <tbody>
+          <thead>
             <tr>
               <td class="w-20 bold"><p>Launch Date</p> <p class="red">{{current_campaign?.start_at | date:'d-MMM-y' }}</p></td>
               <td class="bold"><p>Total sold</p> <p class="red">{{getTotalSold() | number : '1.0-0'}}</p></td>
@@ -49,6 +49,8 @@
               <td class="bold"><p>{{current_day==0?'Today Sold':'Sold last '+current_day+' days'}}</p> <p class="red">{{getDayrangeSold() | number : '1.0-0'}}</p></td>
               <td class="bold"><p>{{current_day==0?'Today Sales':'Sales last '+current_day+' days'}}</p><p class="red">{{getDayrangeSales() | number : '1.0-0'}}</p></td>
             </tr>
+          </thead>
+          <tbody>
             <tr *ngFor="let item of tabledata">
               <td class="w-33">{{ storeName(item.store_id) }}</td>
               <td>{{ item.totalsold | number : '1.0-0'}}</td>
@@ -66,7 +68,7 @@
   <div class="col-lg-12 sales_chart">
     <div class="card">
         <div class="card-header">
-            <i class="fa fa-align-justify"></i> Choose Campaign
+            <i class="fa fa-align-justify"></i> Campaign results
         </div>
         <div class="card-block">
             <div class="centered">
