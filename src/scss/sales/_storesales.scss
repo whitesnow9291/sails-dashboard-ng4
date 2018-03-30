@@ -95,9 +95,14 @@ table.campaign_modal {
         white-space: nowrap;
     }
 }
-table.campaigntable .input-group-btn{
-    width: 100%;
-}
+table.campaigntable{
+    .input-group {
+        justify-content: center;
+    }
+    .input-group-btn{
+        width: 50%;
+    }
+} 
 .sailandsoldtable{
     th p{
         padding: 0;

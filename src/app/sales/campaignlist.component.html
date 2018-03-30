@@ -24,7 +24,7 @@
                     <td class="bold">End date</td>
                     <td class="bold">Total sold</td>
                     <td class="bold">Total sales</td>
-                    <td class="bold">Manage</td>
+                    <td class="bold">Action</td>
                 </tr>
                 <tr *ngFor="let item of campaigns; let i = index">
                   <td>{{ item.name }}</td>
@@ -58,7 +58,7 @@
     <div class="modal-dialog modal-primary" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Campaign Info</h4>
+                <h4 class="modal-title">Campaign details</h4>
                 <button type="button" class="close" (click)="primaryModal.hide()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,7 +75,7 @@
                             <td class="text-left align-middle"><input class="w-100" type="text" [(ngModel)] = "updatedCampaign.sku"/></td>
                         </tr>
                         <tr>
-                            <td class="text-left left_td align-middle">From To</td>
+                            <td class="text-left left_td align-middle">Validity</td>
                             <td class="text-left align-middle">
                                 <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue" 
                                 [bsConfig]="{rangeInputFormat: 'DD-MMM-YYYY'}">
@@ -87,7 +87,7 @@
                                 <div class="col-md-9">
                                     <div class="checkbox" *ngFor = "let option of storeoptions; let i = index">
                                         <label for="checkbox{{i}}">
-                                            <input id="checkbox{{i}}" type="checkbox" value="{{option.value}}"
+                                            <input class="mr-3" id="checkbox{{i}}" type="checkbox" value="{{option.value}}"
                                             [(ngModel)]="option.checked">{{option.name}}
                                         </label>
                                     </div>
