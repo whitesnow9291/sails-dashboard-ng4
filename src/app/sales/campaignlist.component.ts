@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 declare var jquery: any;
 declare var $: any;
 @Component({
@@ -42,7 +42,7 @@ export class CampaignlistComponent implements OnInit {
     });
   }
   removeCampaign(index) {
-    if(confirm('Are you sure?')) {
+    if (confirm('Are you sure?')) {
       const params = {
         'command': 'removeCampaign',
         'id': this.campaigns[index].id,

@@ -71,12 +71,12 @@
             <i class="fa fa-align-justify"></i> Campaign results
         </div>
         <div class="card-block">
-            <div class="centered">
+            <div class="centered mb-5">
                 <button type="button" class="btn group_btn" [class.btn-primary] = "current_store==0" 
-                  [class.btn-outline-primary] = "current_store!=0" (click) = "changeStore(0)">{{'All stores:'+getDayrangeSold()}}</button>
+                  [class.btn-outline-primary] = "current_store!=0" (click) = "changeStore(0)">{{'All stores:   '+getDayrangeSold()}}</button>
                 <button type="button" class="btn group_btn" [class.btn-outline-primary] = "current_store!=item.store_id" (click) = "changeStore(item.store_id)"
                 *ngFor="let item of tabledata"
-                [class.btn-primary] = "current_store==item.store_id">{{storeName(item.store_id)+':'+item.dayrangesold}}</button>
+                [class.btn-primary] = "current_store==item.store_id">{{storeName(item.store_id)+':   '+item.dayrangesold}}</button>
             </div>
             <div class="chart-wrapper">
                 <canvas baseChart class="chart"

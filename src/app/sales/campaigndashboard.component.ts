@@ -34,12 +34,22 @@ export class CampaigndashboardComponent implements OnInit {
   stores: any;
   // lineChart
   public lineChartData: Array<any> = [
-    {data: [], label: ''}
+    {data: []}
   ];
   public lineChartLabels: Array<any> = [];
   public lineChartOptions: any = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
     animation: false,
-    responsive: true
+    responsive: true,
+    legend: {
+      display: false
+    },
   };
   public lineChartColours: Array<any> = [
     { // dark grey
@@ -51,7 +61,7 @@ export class CampaigndashboardComponent implements OnInit {
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     }
   ];
-  public lineChartLegend: Boolean = true;
+  public lineChartLegend: Boolean = false;
   public lineChartType: String = 'line';
   constructor(public elRef: ElementRef, public salesdata: SalesDataService) { }
   ngOnInit() {
@@ -197,7 +207,6 @@ export class CampaigndashboardComponent implements OnInit {
       this.lineChartData[0].data = this.graphdata.total.map((item) => {
         return item.sold
       })
-      this.lineChartData[0].label = 'ALL'
     } else {
       for (let i = 0; i < this.graphdata.store.length; i++) {
         if (store_id === this.graphdata.store[i].store_id) {
@@ -207,7 +216,6 @@ export class CampaigndashboardComponent implements OnInit {
           this.lineChartData[0].data = this.graphdata.store[i].solddata.map((item) => {
             return item.sold
           })
-          this.lineChartData[0].label = this.storeName(store_id)
           break
         }
       }
@@ -217,7 +225,6 @@ export class CampaigndashboardComponent implements OnInit {
 
   }
   chartClicked($event) {
-    
+
   }
 }
-

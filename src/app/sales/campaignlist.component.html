@@ -18,7 +18,7 @@
             <table class="table table-bordered table-sm campaigntable">
               <tbody>
                 <tr>
-                    <td class="bold">Name</td>
+                    <td class="bold w-25">Name</td>
                     <td class="bold">SKU</td>
                     <td class="bold">Start date</td>
                     <td class="bold">End date</td>
@@ -68,16 +68,17 @@
                     <tbody>
                         <tr>
                             <td class="text-left align-middle">Name</td>
-                            <td class="text-left align-middle"><input type="text" [(ngModel)] = "updatedCampaign.name"/></td>
+                            <td class="text-left align-middle"><input class="w-100" type="text" [(ngModel)] = "updatedCampaign.name"/></td>
                         </tr>
                         <tr>
                             <td class="text-left align-middle">SKU</td>
-                            <td class="text-left align-middle"><input type="text" [(ngModel)] = "updatedCampaign.sku"/></td>
+                            <td class="text-left align-middle"><input class="w-100" type="text" [(ngModel)] = "updatedCampaign.sku"/></td>
                         </tr>
                         <tr>
                             <td class="text-left align-middle">From To</td>
                             <td class="text-left align-middle">
-                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue">
+                                <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue" 
+                                [bsConfig]="{rangeInputFormat: 'DD-MMM-YYYY'}">
                             </td>
                         </tr>
                         <tr>
