@@ -89,6 +89,15 @@ input.form-control, input.form-control:focus {
         z-index: 0;
     }
 }
+table.campaign_modal {
+    td.left_td {
+        width: 0.5%;
+        white-space: nowrap;
+    }
+}
+table.campaigntable .input-group-btn{
+    width: 100%;
+}
 .sailandsoldtable{
     th p{
         padding: 0;

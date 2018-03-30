@@ -64,25 +64,25 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-sm" *ngIf="updatedCampaign">
+                <table class="table table-bordered table-sm campaign_modal" *ngIf="updatedCampaign">
                     <tbody>
                         <tr>
-                            <td class="text-left align-middle">Name</td>
+                            <td class="text-left left_td align-middle">Name</td>
                             <td class="text-left align-middle"><input class="w-100" type="text" [(ngModel)] = "updatedCampaign.name"/></td>
                         </tr>
                         <tr>
-                            <td class="text-left align-middle">SKU</td>
+                            <td class="text-left left_td align-middle">SKU</td>
                             <td class="text-left align-middle"><input class="w-100" type="text" [(ngModel)] = "updatedCampaign.sku"/></td>
                         </tr>
                         <tr>
-                            <td class="text-left align-middle">From To</td>
+                            <td class="text-left left_td align-middle">From To</td>
                             <td class="text-left align-middle">
                                 <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue" 
                                 [bsConfig]="{rangeInputFormat: 'DD-MMM-YYYY'}">
                             </td>
                         </tr>
                         <tr>
-                            <td class="text-left align-middle">Publish in stores</td>
+                            <td class="text-left left_td align-middle">Publish in stores</td>
                             <td class="text-left">
                                 <div class="col-md-9">
                                     <div class="checkbox" *ngFor = "let option of storeoptions; let i = index">
