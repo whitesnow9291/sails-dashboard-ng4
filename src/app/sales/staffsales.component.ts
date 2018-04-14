@@ -11,9 +11,9 @@ import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 declare var jquery: any;
 declare var $: any;
 @Component({
-  templateUrl: 'storesales.component.html'
+  templateUrl: 'staffsales.component.html'
 })
-export class StoreComponent implements OnInit {
+export class StaffComponent implements OnInit {
   months_status = []
   stores: any;
   years = years
@@ -25,24 +25,26 @@ export class StoreComponent implements OnInit {
   all_store: any;
 
   current_store: Subject<number> = new Subject<number>();
-  current_store_val: number
-  current_year_val: number
+
+  current_staff: Subject<number> = new Subject<number>();
   current_year: Subject<number> = new Subject<number>();
   current_months: Subject<number[]> = new Subject<number[]>();
-  canSave: Boolean = false
+  current_store_val: number
+  current_year_val: number
+  current_staff_val: number
+
+  canSave: Boolean = true
   optionsSub: Subscription;
 
   actualdata: any;
   targetdata: any;
-  actualtargetdata: any;
+  targetdatainput: number[];
 
-  targetInputYearData: any;
-  targetEmployeeInputYearData: any;
-
+  userdata: any
   current_user: any;
   constructor(public elRef: ElementRef, public salesdata: SalesDataService, public authservice: AuthService) { }
   ngOnInit() {
-    const params = {
+    let params = {
       'command': 'getStores'
     }
     this.all_store = {
@@ -51,14 +53,27 @@ export class StoreComponent implements OnInit {
     }
     this.stores = this.salesdata.getStores(params)
     this.setOptions();
+    this.targetdatainput = []
     for (let i = 0; i < 12; i ++) {
       this.months_status.push(false)
+      this.targetdatainput.push(0)
     }
-    this.targetInputYearData = []
-    for (let i = 0; i < 12; i ++) {
-      this.targetInputYearData.push(0)
+    params = {
+      'command': 'getUserList'
     }
-    this.targetEmployeeInputYearData = []
+    this.salesdata.getUserList(params)
+    .subscribe(data => {
+      this.userdata = data
+      for (let i = 0; i < this.userdata.length - 1; i++) {
+        for (let j = i + 1; j < this.userdata.length; j++) {
+          if ((this.userdata[i].display_name > this.userdata[j].display_name)) {
+            const temp = this.userdata[i];
+            this.userdata[i] = this.userdata[j]
+            this.userdata[j] = temp
+          }
+        }
+      }
+    });
     this.current_user = this.authservice.current_user
   }
   printMap() {
@@ -90,11 +105,11 @@ export class StoreComponent implements OnInit {
     this.optionsSub = Observable.combineLatest(
       this.current_store,
       this.current_year,
-      this.current_months
-    ).debounceTime(300).subscribe(([current_store, current_year, current_months]) => {
+      this.current_months,
+      this.current_staff
+    ).debounceTime(300).subscribe(([current_store, current_year, current_months, current_staff]) => {
         if (current_store == null || current_year == null || current_months == null || !current_months.length) {
           this.canSave = false
-          this.actualtargetdata = null
           this.targetdata = null
           this.actualdata = null
           return
@@ -103,40 +118,10 @@ export class StoreComponent implements OnInit {
         this.current_year_val = current_year
         this.current_store_val = current_store
         this.message = 'loading data ...'
-        if (this.current_target === 'actuals') {
-          const params = {
-            'command': 'getActuals',
-            'store_id': current_store,
-            'year': current_year,
-            'months': current_months,
-            'page': 1,
-            'perPage': 100
-          }
-          this.salesdata.getActuals(params)
-          .subscribe(data => {
-            this.actualdata = data;
-            this.message = '&nbsp;'
-          });
-        } else if (this.current_target === 'targets') {
-          const params = {
-            'command': 'getTargets',
-            'store_id': current_store,
-            'year': current_year,
-            'months': current_months,
-            'page': 1,
-            'perPage': 100
-          }
-          this.salesdata.getTargets(params)
-          .subscribe(data => {
-            console.log(data)
-            this.targetdata = data;
-            this.setEmployeeTargetInputData();
-            this.message = '&nbsp;'
-          });
-        }
         const params = {
-          'command': 'getActualvsTarget',
+          'command': 'getActualvsTargetOfStaff',
           'store_id': current_store,
+          'staff_id': current_staff,
           'year': current_year,
           'months': current_months,
           'page': 1,
@@ -144,98 +129,81 @@ export class StoreComponent implements OnInit {
         }
         this.salesdata.getActualvsTarget(params)
         .subscribe(data => {
-          this.actualtargetdata = data;
-          this.setTargetInputData();
+          this.actualdata = data.actual
+          this.targetdata = data.target
+          this.setTargetInput();
+          // console.log(this.actualdata)
+          // console.log(this.targetdata)
           this.message = '&nbsp;'
         });
     });
   }
-  getYearTarget() {
-    let yeartarget: Number = 0
-    this.targetInputYearData.forEach(element => {
-      yeartarget = Number(yeartarget) + Number(element)
-    });
-    return yeartarget
-  }
-  getYearEmployeeTarget(employee_id) {
-    let yeartarget: Number = 0
-    let employee
-    this.targetEmployeeInputYearData.forEach(element => {
-      if (element.employee.employee_id === employee_id) {
-        employee = element
-        return
-      }
-    });
-    employee.subtotal.forEach(element => {
-      yeartarget = Number(yeartarget) + Number(element)
-    });
-    return yeartarget
-  }
-  setEmployeeTargetInputData() {
-    if (!this.targetdata) {
-      return
-    }
-    this.targetEmployeeInputYearData = []
-
-    for (let i = 0; i < this.targetdata.length; i++) {
-      const subtotal = []
-      for (let t = 0; t < 12; t++) {
-        subtotal.push(0)
-      }
-      for (let j = 0; j < this.targetdata[i].subtotal.length; j++) {
-        const subtotal_month = this.targetdata[i].subtotal[j]
-        subtotal[subtotal_month.month - 1] = subtotal_month.target
-      }
-      const employee = this.targetdata[i].employee
-      const inputData = {
-        'employee': employee,
-        'subtotal': subtotal
-      }
-      this.targetEmployeeInputYearData.push(inputData)
-    }
-  }
-  setTargetInputData() {
-    if (!this.targetdata || !this.actualtargetdata) {
-      return
-    }
-    this.targetInputYearData = []
+  setTargetInput() {
+    this.targetdatainput = []
     for (let i = 0; i < 12; i ++) {
-      this.targetInputYearData.push(0)
+      this.targetdatainput.push(0)
     }
-    for (let i = 0; i < this.actualtargetdata.target.month_target.length; i++) {
-      const target = this.actualtargetdata.target.month_target[i]
-      this.targetInputYearData[target.month - 1] = target.target
-    }
-  }
-  getSubTotal(month, subtotals) {
-    for (let i = 0; i < subtotals.length; i++) {
-      if (Number(subtotals[i].month) === month) {
-        return subtotals[i].subtotal;
+    if (this.targetdata) {
+      for (let i = 0; i < this.targetdata.length; i++) {
+        const record = this.targetdata[i]
+        this.targetdatainput[Number(record.month) - 1] = record.target
       }
     }
   }
-  getTotalActualFromMonth(month, subtotals) {
-    for (let i = 0; i < subtotals.length; i++) {
-      if (Number(subtotals[i].month) === month) {
-        return Number(subtotals[i].subtotal);
+  getActualOfMonth(month) {
+    if (this.actualdata) {
+      for (let i = 0; i < this.actualdata.length; i++) {
+        const record = this.actualdata[i]
+        if (Number(record.month) === Number(month)) {
+          return record.subtotal
+        }
       }
     }
+    return 0
   }
-  getVarianceActualTab(month) {
-    const targets = this.actualtargetdata.target.month_target
-    const actuals = this.actualtargetdata.actual.month_target
-    for (let i = 0; i < targets.length; i++) {
-      if (Number(targets[i].month) === month) {
-        return actuals[i].subtotal - targets[i].target;
+  getYearOfActual() {
+    if (this.actualdata) {
+      let temp = 0;
+      for (let i = 0; i < this.actualdata.length; i++) {
+        const record = this.actualdata[i]
+        temp += Number(record.subtotal)
       }
+      return temp
     }
+    return 0
   }
-  getTotalTargetFromMonth(month, subtotals) {
-    for (let i = 0; i < subtotals.length; i++) {
-      if (Number(subtotals[i].month) === month) {
-        return Number(subtotals[i].target);
+  getYearTargetOfReal() {
+    if (this.targetdata) {
+      let temp = 0;
+      for (let i = 0; i < this.targetdata.length; i++) {
+        const record = this.targetdata[i]
+        temp += Number(record.target)
+      }
+      return temp
+    }
+    return 0
+  }
+  getYearTargetOfInput() {
+    if (this.targetdatainput) {
+      let temp = 0;
+      for (let i = 0; i < this.targetdatainput.length; i++) {
+        const record = this.targetdatainput[i]
+        temp += Number(record)
+      }
+      return temp
+    }
+    return 0
+  }
+  getTargetOfMonth(month) {
+    if (this.targetdata) {
+      for (let i = 0; i < this.targetdata.length; i++) {
+        const record = this.targetdata[i]
+        if (Number(record.month) === Number(month)) {
+          return record.target
+        }
       }
     }
+    return 0
   }
   actionChanged ($event, action) {
     if ( this.current_target === action ) {
@@ -248,7 +216,6 @@ export class StoreComponent implements OnInit {
 
     this.actualdata = null;
     this.targetdata = null;
-    this.actualtargetdata = null;
 
     for (let i = 0; i < 12; i ++) {
       this.months_status[i] = false
@@ -270,6 +237,7 @@ export class StoreComponent implements OnInit {
     }
   }
   storeChanged ($event, store) {
+    this.current_store_val = store.store_id
     this.current_store.next(store.store_id)
     // init year/month
     this.current_months.next(null)
@@ -285,6 +253,14 @@ export class StoreComponent implements OnInit {
     // end init
     $('.store_btn').addClass(this.btn_outline_class)
     $('.store_btn').removeClass(this.btn_fill_class)
+    $event.target.classList.remove(this.btn_outline_class)
+    $event.target.classList.add(this.btn_fill_class)
+  }
+  staffChanged ($event, staff) {
+    this.current_staff_val = staff.user_id
+    this.current_staff.next(staff.user_id)
+    $('.staff_btn').addClass(this.btn_outline_class)
+    $('.staff_btn').removeClass(this.btn_fill_class)
     $event.target.classList.remove(this.btn_outline_class)
     $event.target.classList.add(this.btn_fill_class)
   }
@@ -309,15 +285,21 @@ export class StoreComponent implements OnInit {
   }
   saveTargets () {
     const params = {
-      'command': 'setTarget',
-      'year': this.current_year_val,
-      'store_id': this.current_store_val,
-      'target_store': this.targetInputYearData,
-      'target_employee': this.targetEmployeeInputYearData
+      'command': 'setTargetOfStaff',
+      'params': {
+        'year': this.current_year_val,
+        'store_id': this.current_store_val,
+        'staff_id': this.current_staff_val,
+        'targetOfStaff': this.targetdatainput
+      }
     }
-    this.salesdata.setTarget(params)
+    this.salesdata.setTargetOfStaff(params)
     .subscribe(data => {
-      alert('successfully updated!')
+      if (data) {
+        alert('successfully updated!')
+      } else {
+        alert('server error, please try again!')
+      }
     });
   }
 }

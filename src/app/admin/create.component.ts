@@ -30,7 +30,8 @@ export class CreateComponent implements OnInit {
       'password': '',
       'password_conf': '',
       'role': -1,
-      'store': -1
+      'store': -1,
+      'editable': 'true'
     }
   }
 
@@ -39,6 +40,9 @@ export class CreateComponent implements OnInit {
   }
   onStoreChange(newValue) {
     this.user.store = newValue;  // don't forget to update the model here
+  }
+  onEditableChange(newValue) {
+    this.user.editable = newValue;  // don't forget to update the model here
   }
   createAccount() {
     this.message = 'Trying to create account ...';

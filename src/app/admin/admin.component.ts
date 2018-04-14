@@ -15,7 +15,6 @@ export class AdminComponent implements OnInit {
     const params = {
       'command': 'getUserList'
     }
-    this.userrole = ['Admin', 'Supervisor', 'Staff', 'Staff']
     this.salesdata.getUserList(params)
     .subscribe(data => {
       // this.userdata = data
@@ -30,6 +29,7 @@ export class AdminComponent implements OnInit {
         }
       }
     });
+    this.userrole = ['Admin', 'Supervisor', 'Staff', 'Staff']
     this.current_user = this.authservice.current_user
   }
   getRoleTitle (role_id) {
@@ -51,7 +51,6 @@ export class AdminComponent implements OnInit {
       preserveFragment: true,
       queryParams: user
     };
-
     // Redirect the user
     this.router.navigate(['admin/update'], { queryParams: user });
   }

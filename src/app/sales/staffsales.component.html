@@ -1,0 +1,117 @@
+<div class="animated fadeIn">
+    <table class="table table-bordered table-responsive table-sm storesales_table">
+        <thead>
+          <tr>
+            <th>Select action</th>
+            <td>
+              <button type="button" class="btn btn-outline-primary action_btn targets_btn" (click)="actionChanged($event, 'targets')">Targets</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-success action_btn actuals_btn" (click)="actionChanged($event, 'actuals')">Actuals</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="saveTargets()" [hidden] = "current_target != 'targets'">Save</button>
+            </td>
+            <td>
+              <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+            </td>
+            <td>
+              <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Select store</th>
+            <ng-container  *ngIf = "stores!=null">
+              <td *ngFor="let store of stores">
+                <button type="button" class="btn {{btn_outline_class}} store_btn" (click)="storeChanged($event, store)">{{store.name}}</button>
+              </td>
+            </ng-container>
+            <td *ngIf = "false">
+              <button type="button" class="btn {{btn_outline_class}} store_btn" (click)="storeChanged($event, all_store)">All stores</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Select staff</th>
+            <ng-container  *ngIf = "userdata!=null">
+              <ng-container *ngFor="let user of userdata">
+                <td *ngIf="user.store_ids == current_store_val" >
+                  <button type="button" class="btn {{btn_outline_class}} staff_btn" (click)="staffChanged($event, user)">{{user.display_name}}</button>
+                </td>
+                </ng-container>
+            </ng-container>
+          </tr>
+          <tr>
+            <th>Select year</th>
+            <td *ngFor="let year of years">
+              <button type="button" class="btn {{btn_outline_class}} year_btn" (click)="yearChanged($event, year)">{{year}}</button>
+            </td>
+          </tr>
+          <tr>
+            <th>Select month</th>
+            <td *ngFor="let month of months">
+              <button type="button" class="btn {{btn_outline_class}} month_btn" (click)="monthChanged($event, month)">{{month.title}}</button>
+            </td>
+            <th class="align_right">Year</th>
+          </tr>
+          <tr>
+            <th colspan="14" [innerHtml] = "message"></th> 
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="actualdata != null && targetdata != null">
+                <tr class="table-success">
+                  <td class="bold">Actual</td> 
+                    <td *ngFor="let month of months">
+                      {{ getActualOfMonth(month.no) | number : '1.0-0' }}
+                    </td>
+                    <td>
+                      {{ getYearOfActual() }}
+                    </td>
+                </tr>
+                <tr class="table-info">
+                  <td class="bold">Target</td>
+                    <td *ngFor="let month of months">
+                      <ng-container *ngIf="current_target == 'targets'">
+                        <input class="form-control"  [(ngModel)] = "targetdatainput[month.no-1]" [hidden] = "months_status[month.no-1] == false"/>
+                        <ng-container *ngIf="months_status[month.no-1] == false">
+                            {{ targetdatainput[month.no-1] }}
+                        </ng-container>
+                          
+                      </ng-container>
+                      <ng-container *ngIf="current_target == 'actuals'">
+                        {{ getTargetOfMonth(month.no) | number : '1.0-0' }}
+                      </ng-container>
+                    </td>
+                    <td>
+                      <ng-container *ngIf="current_target == 'targets'">
+                        {{ getYearTargetOfInput()| number : '1.0-0'  }}
+                      </ng-container>
+                      <ng-container *ngIf="current_target == 'actuals'">
+                        {{ getYearTargetOfReal() | number : '1.0-0' }}
+                      </ng-container>
+                    </td>
+                </tr>
+                <tr class="table-danger">
+                  <td class="bold">Variance</td>
+                  <ng-container *ngIf="current_target == 'actuals'">
+                    <td *ngFor="let month of months">
+                      {{ (getActualOfMonth(month.no) - getTargetOfMonth(month.no)) | number : '1.0-0'}}
+                    </td>
+                    <td>
+                      {{ (getYearOfActual() - getYearTargetOfReal()) | number : '1.0-0' }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container *ngIf="current_target == 'targets'">
+                    <td *ngFor="let month of months">
+                      {{ (getActualOfMonth(month.no) - targetdatainput[month.no-1]) | number : '1.0-0'}}
+                    </td>
+                    <td>
+                      {{ (getYearOfActual() - getYearTargetOfInput()) | number : '1.0-0'  }}
+                    </td>
+                  </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+      </table>
+</div>

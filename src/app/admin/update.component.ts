@@ -27,8 +27,10 @@ export class UpdateComponent implements OnInit {
           'password_conf': '',
           'role': params.role_id,
           'store': params.store_ids,
-          'user_id': params.user_id
+          'user_id': params.user_id,
+          'editable': params.editable
         }
+        console.log(this.user)
       });
   }
   ngOnInit () {
@@ -45,6 +47,9 @@ export class UpdateComponent implements OnInit {
   }
   onStoreChange(newValue) {
     this.user.store = newValue;  // don't forget to update the model here
+  }
+  onEditableChange(newValue) {
+    this.user.editable = newValue;  // don't forget to update the model here
   }
   updateAccount() {
     this.message = 'Trying to update account ...';

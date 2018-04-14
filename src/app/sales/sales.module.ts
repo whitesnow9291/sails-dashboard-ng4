@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { StoreComponent } from './storesales.component';
+import { StaffComponent } from './staffsales.component';
 import { ResellerComponent } from './resellersales.component';
 import { CampaigndashboardComponent } from './campaigndashboard.component';
 import { CampaignlistComponent } from './campaignlist.component';
@@ -28,6 +29,6 @@ import { HighlightDirective } from '../shared/highlight.directive';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
   ],
-  declarations: [ StoreComponent, ResellerComponent, HighlightDirective, CampaignlistComponent, CampaigndashboardComponent ]
+  declarations: [ StoreComponent, StaffComponent, ResellerComponent, HighlightDirective, CampaignlistComponent, CampaigndashboardComponent ]
 })
 export class SalesModule { }

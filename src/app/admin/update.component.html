@@ -42,6 +42,13 @@
                                 <option *ngFor="let store of stores" [value]="store.store_id">{{ store.name }}</option>
                               </select>
                             </div>
+                            <div class="input-group mb-4 editable_div" [hidden] = "user.role!=3">
+                                <span class="input-group-addon"><i class="icon-handbag"></i></span>
+                                <select class="custom-select form-control" [ngModel] = 'user.editable' (ngModelChange)="onEditableChange($event)" >
+                                    <option [value]="'true'">Enabled</option>
+                                    <option [value]="'false'">Disabled</option>
+                                </select>
+                            </div>
                         </div>
                         <button type="button" class="btn btn-block btn-success" (click)="updateAccount()">Update Account</button>
                     </div>

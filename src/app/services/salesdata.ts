@@ -87,6 +87,9 @@ export class SalesDataService {
   setTarget(params): Observable<any> {
     return this.http.post<any>(this.postUrl, params, httpOptions)
   }
+  setTargetOfStaff(params): Observable<any> {
+    return this.http.post<any>(this.postUrl, params, httpOptions)
+  }
   getUserList(params): Observable<any> {
     return this.http.post<any>(this.postUrl, params, httpOptions)
   }

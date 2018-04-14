@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { StoreComponent } from './storesales.component';
+import { StaffComponent } from './staffsales.component';
 import { ResellerComponent } from './resellersales.component';
 import { CampaigndashboardComponent } from './campaigndashboard.component';
 import { CampaignlistComponent } from './campaignlist.component';
@@ -17,6 +18,13 @@ const routes: Routes = [
     component: StoreComponent,
     data: {
       title: 'Store sales'
+    }
+  },
+  {
+    path: 'staff',
+    component: StaffComponent,
+    data: {
+      title: 'Staff sales'
     }
   },
   {
