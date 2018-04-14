@@ -10,13 +10,13 @@
               <button type="button" class="btn btn-outline-success action_btn actuals_btn" (click)="actionChanged($event, 'actuals')">Actuals</button>
             </td>
             <td>
-              <button type="button" class="btn btn-danger" (click)="saveTargets()" [disabled] = "false" [hidden] = "current_target != 'targets'">Save</button>
+              <button type="button" class="btn btn-danger" (click)="saveTargets()" [disabled] = "!canSave || getUserRole()>1" [hidden] = "current_target != 'targets'">Save</button>
             </td>
             <td>
-              <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+              <button class="btn btn-outline-warning print_btn" [disabled] = "getUserRole()>2" (click) = "printMap()"><i class="icon-printer"></i></button>
             </td>
             <td>
-              <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+              <button class="btn btn-outline-danger print_btn" [disabled] = "getUserRole()>2" (click) = "toCSV()">To CSV</button>
             </td>
           </tr>
           <tr>
@@ -62,7 +62,7 @@
               <tr class="table-info">
                   <td class="bold">Target</td>
                   <td *ngFor="let month of months">
-                    <input class="form-control" type="number" [disabled] ="false" [hidden] = "months_status[month.no-1] == false" [(ngModel)] = "targetInputYearData[month.no-1]">
+                    <input class="form-control" type="number" [disabled] ="getUserRole()>1" [hidden] = "months_status[month.no-1] == false" [(ngModel)] = "targetInputYearData[month.no-1]">
                     <ng-container *ngIf="months_status[month.no-1] == false">
                       {{ targetInputYearData[month.no-1] | number : '1.0-0'}}
                     </ng-container>
@@ -85,7 +85,7 @@
               <tr *ngFor="let employee of targetEmployeeInputYearData">
                 <td class="bold" scope="row">{{ employee.employee.employee_display_name }} </td>
                 <td *ngFor="let month of months">
-                  <input class="form-control" type="number" [hidden] = "months_status[month.no-1] == false" [(ngModel)]="employee.subtotal[month.no-1]" step=".01">
+                  <input class="form-control" type="number" [disabled] ="getUserRole()>1" [hidden] = "months_status[month.no-1] == false" [(ngModel)]="employee.subtotal[month.no-1]" step=".01">
                   <ng-container *ngIf="months_status[month.no-1] == false">
                     {{ employee.subtotal[month.no-1] | number : '1.0-0' }}
                   </ng-container>

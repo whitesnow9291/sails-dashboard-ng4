@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SalesDataService } from '../services/salesdata';
+import { AuthService } from '../services/auth.service';
 import { years, months } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
@@ -31,6 +32,7 @@ export class CampaigndashboardComponent implements OnInit {
   current_day: number
   current_store: number
 
+  current_user: any
   stores: any;
   // lineChart
   public lineChartData: Array<any> = [
@@ -63,7 +65,7 @@ export class CampaigndashboardComponent implements OnInit {
   ];
   public lineChartLegend: Boolean = false;
   public lineChartType: String = 'line';
-  constructor(public elRef: ElementRef, public salesdata: SalesDataService) { }
+  constructor(public elRef: ElementRef, public salesdata: SalesDataService, public authservice: AuthService) { }
   ngOnInit() {
     const params = {
       'command': 'getCampaigns',
@@ -84,6 +86,10 @@ export class CampaigndashboardComponent implements OnInit {
     this.tabledata = []
     this.setOptions()
     this.current_store = 0
+    this.current_user = this.authservice.current_user
+  }
+  getUserRole() {
+    return this.current_user.role_id
   }
   changeday(event) {
     this.current_day = event

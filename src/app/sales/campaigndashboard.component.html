@@ -37,8 +37,8 @@
       <div class="card-block">
 
           <div class="mb-3 float-right">
-            <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
-            <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+            <button class="btn btn-outline-warning print_btn" [disabled] = "getUserRole()>2" (click) = "printMap()"><i class="icon-printer"></i></button>
+            <button class="btn btn-outline-danger print_btn" [disabled] = "getUserRole()>2" (click) = "toCSV()">To CSV</button>
           </div>
         <table class="table table-bordered sailandsoldtable">
           <thead>

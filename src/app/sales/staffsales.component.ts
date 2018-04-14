@@ -33,7 +33,7 @@ export class StaffComponent implements OnInit {
   current_year_val: number
   current_staff_val: number
 
-  canSave: Boolean = true
+  canSave: Boolean = false
   optionsSub: Subscription;
 
   actualdata: any;
@@ -114,7 +114,6 @@ export class StaffComponent implements OnInit {
           this.actualdata = null
           return
         }
-        this.canSave = true
         this.current_year_val = current_year
         this.current_store_val = current_store
         this.message = 'loading data ...'
@@ -129,6 +128,7 @@ export class StaffComponent implements OnInit {
         }
         this.salesdata.getActualvsTarget(params)
         .subscribe(data => {
+          this.canSave = true
           this.actualdata = data.actual
           this.targetdata = data.target
           this.setTargetInput();
@@ -137,6 +137,9 @@ export class StaffComponent implements OnInit {
           this.message = '&nbsp;'
         });
     });
+  }
+  getUserRole() {
+    return this.current_user.role_id
   }
   setTargetInput() {
     this.targetdatainput = []

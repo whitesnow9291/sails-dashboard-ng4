@@ -10,13 +10,13 @@
               <button type="button" class="btn btn-outline-success action_btn actuals_btn" (click)="actionChanged($event, 'actuals')">Actuals</button>
             </td>
             <td>
-              <button type="button" class="btn btn-danger" (click)="saveTargets()" [hidden] = "current_target != 'targets'">Save</button>
+              <button type="button" class="btn btn-danger" (click)="saveTargets()" [disabled] = "!canSave || getUserRole()>1" [hidden] = "current_target != 'targets'">Save</button>
             </td>
             <td>
-              <button class="btn btn-outline-warning print_btn" (click) = "printMap()"><i class="icon-printer"></i></button>
+              <button class="btn btn-outline-warning print_btn" [disabled] = "getUserRole()>2" (click) = "printMap()"><i class="icon-printer"></i></button>
             </td>
             <td>
-              <button class="btn btn-outline-danger print_btn" (click) = "toCSV()">To CSV</button>
+              <button class="btn btn-outline-danger print_btn" [disabled] = "getUserRole()>2" (click) = "toCSV()">To CSV</button>
             </td>
           </tr>
           <tr>
@@ -72,7 +72,7 @@
                   <td class="bold">Target</td>
                     <td *ngFor="let month of months">
                       <ng-container *ngIf="current_target == 'targets'">
-                        <input class="form-control"  [(ngModel)] = "targetdatainput[month.no-1]" [hidden] = "months_status[month.no-1] == false"/>
+                        <input class="form-control" [disabled] ="getUserRole()>1" [(ngModel)] = "targetdatainput[month.no-1]" [hidden] = "months_status[month.no-1] == false"/>
                         <ng-container *ngIf="months_status[month.no-1] == false">
                             {{ targetdatainput[month.no-1] }}
                         </ng-container>

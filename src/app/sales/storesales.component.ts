@@ -86,6 +86,10 @@ export class StoreComponent implements OnInit {
     }
     new Angular2Csv(data, 'report-store');
   }
+
+  getUserRole() {
+    return this.current_user.role_id
+  }
   private setOptions() {
     this.optionsSub = Observable.combineLatest(
       this.current_store,
@@ -99,7 +103,6 @@ export class StoreComponent implements OnInit {
           this.actualdata = null
           return
         }
-        this.canSave = true
         this.current_year_val = current_year
         this.current_store_val = current_store
         this.message = 'loading data ...'
@@ -144,6 +147,7 @@ export class StoreComponent implements OnInit {
         }
         this.salesdata.getActualvsTarget(params)
         .subscribe(data => {
+          this.canSave = true
           this.actualtargetdata = data;
           this.setTargetInputData();
           this.message = '&nbsp;'

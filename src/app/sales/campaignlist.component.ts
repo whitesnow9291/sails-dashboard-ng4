@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SalesDataService } from '../services/salesdata';
+import { AuthService } from '../services/auth.service';
 import { years, months } from '../shared/constants';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs/Subscription';
@@ -23,8 +24,9 @@ export class CampaignlistComponent implements OnInit {
   stores: any;
   storeoptions: any[];
   campaigns: any[];
+  current_user: any
   test: any
-  constructor(public elRef: ElementRef, public salesdata: SalesDataService) { }
+  constructor(public elRef: ElementRef, public salesdata: SalesDataService, public authservice: AuthService) { }
   ngOnInit() {
     this.campaigns = []
     this.storeoptions = []
@@ -40,6 +42,10 @@ export class CampaignlistComponent implements OnInit {
     .subscribe(data => {
       this.campaigns = data
     });
+    this.current_user = this.authservice.current_user
+  }
+  getUserRole() {
+    return this.current_user.role_id
   }
   removeCampaign(index) {
     if (confirm('Are you sure?')) {
