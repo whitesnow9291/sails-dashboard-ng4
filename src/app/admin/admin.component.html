@@ -8,7 +8,9 @@
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Store</th>
             <th>Role</th>
+            <th>Status</th>
             <th>#</th>
           </tr>
         </thead>
@@ -17,7 +19,9 @@
             <td>{{i}}</td>
             <td>{{ user.display_name }}</td>
             <td>{{ user.email }}</td>
+            <td>{{ getStoreTitle(user.store_ids) }}</td>
             <td>{{ getRoleTitle(user.role_id) }}</td>
+            <td [class.text-success] = "user.editable=='true'" [class.text-danger] = "user.editable=='false'">{{user.editable=='true'? 'Active': 'Inactive'}}</td>
             <td>
               <button type="button" class="btn btn-primary btn-sm" (click) = "update(user)"><i class="icon-pencil"></i></button>
               <button type="button" class="btn btn-danger btn-sm" (click) = "remove(user)"><i class="icon-close"></i></button>

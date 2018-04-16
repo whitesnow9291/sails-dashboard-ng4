@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 export class AdminComponent implements OnInit {
   userdata: any = [];
   userrole: String [];
+  stores: any;
   current_user: any;
   constructor(public router: Router, public elRef: ElementRef, public salesdata: SalesDataService, public authservice: AuthService) { }
   ngOnInit() {
@@ -18,6 +19,7 @@ export class AdminComponent implements OnInit {
     this.salesdata.getUserList(params)
     .subscribe(data => {
       // this.userdata = data
+      // console.log(data)
       this.userdata = data
       for (let i = 0; i < this.userdata.length - 1; i++) {
         for (let j = i + 1; j < this.userdata.length; j++) {
@@ -31,10 +33,20 @@ export class AdminComponent implements OnInit {
     });
     this.userrole = ['Admin', 'Supervisor', 'Staff', 'Staff']
     this.current_user = this.authservice.current_user
+    this.stores = this.salesdata.stores
   }
   getRoleTitle (role_id) {
     const role_id_n = Number(role_id)
     return this.userrole[role_id_n - 1]
+  }
+  getStoreTitle (store_id) {
+    const store_id_n = Number(store_id)
+    for (let i = 0; i < this.stores.length; i++) {
+      if (Number(this.stores[i].store_id) === store_id_n) {
+        return this.stores[i].name
+      }
+    }
+    return 'Unknown Store'
   }
   create() {
     const navigationExtras: NavigationExtras = {
